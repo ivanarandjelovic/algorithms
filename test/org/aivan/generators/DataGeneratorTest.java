@@ -1,5 +1,7 @@
 package org.aivan.generators;
 
+import java.util.Arrays;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -59,5 +61,25 @@ public class DataGeneratorTest {
 		long[] longs = DataGenerator.generateRandomLongArray(INT_ARRAY_LENGTH);
 		Assert.assertNotNull("Generated array must not be null", longs);
 		Assert.assertEquals("There should be exactly length elements", longs.length, INT_ARRAY_LENGTH);
+	}
+
+	@Test
+	public void shuffledArrayTest() {
+		long[] longs = DataGenerator.generateRandomSequentialLongArray(INT_ARRAY_LENGTH);
+		Assert.assertNotNull("Generated array must not be null", longs);
+		Assert.assertEquals("There should be exactly length elements", longs.length, INT_ARRAY_LENGTH);
+
+		long[] original = Arrays.copyOf(longs, longs.length);
+
+		Arrays.sort(longs);
+		for (int i = 0; i < INT_ARRAY_LENGTH; i++) {
+			Assert.assertEquals("Ascending array of ints must contain elements equal to index after sorting", i,
+					longs[i]);
+		}
+
+		Assert.assertFalse(
+				"Array must not be equal to it self after soring (if this happens, then it's very, very unlikely, so re-run the test",
+				Arrays.equals(original, longs));
+		;
 	}
 }
