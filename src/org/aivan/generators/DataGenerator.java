@@ -73,7 +73,6 @@ public class DataGenerator {
 			result[swapIndex] = tmp;
 		}
 		return result;
-
 	}
 
 }
