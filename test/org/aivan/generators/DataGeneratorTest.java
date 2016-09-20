@@ -1,5 +1,13 @@
 package org.aivan.generators;
 
-public class DataGeneratorTest {
+import org.junit.Assert;
+import org.junit.Test;
 
+
+
+public class DataGeneratorTest {
+	@Test
+	public void dummyTest() {
+		Assert.assertTrue(true);
+	}
 }
