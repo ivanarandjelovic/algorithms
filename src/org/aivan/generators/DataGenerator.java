@@ -75,4 +75,65 @@ public class DataGenerator {
 		return result;
 	}
 
+	/**
+	 * 
+	 * @param arrayLength
+	 *            how long the array should be
+	 * @param stringLength
+	 *            how long the strings should be
+	 * @return
+	 * @throws Exception
+	 */
+	public static String[] generateAscendingOrderedStringArray(int arrayLength, int stringLength) throws Exception {
+
+		String[] result = new String[arrayLength];
+
+		StringBuffer currentStringBuffer = initStringBuffer(stringLength);
+
+		for (int i = 0; i < arrayLength; i++) {
+			result[i] = currentStringBuffer.toString();
+			incrementString(currentStringBuffer);
+		}
+		return result;
+	}
+
+	/**
+	 * Initialize StringBuffer with "A"'s
+	 * 
+	 * @param stringLength
+	 * @return
+	 */
+	private static StringBuffer initStringBuffer(int stringLength) {
+		StringBuffer currentStringBuffer = new StringBuffer(stringLength);
+		for (int i = 0; i < stringLength; i++) {
+			currentStringBuffer.append('A');
+		}
+		return currentStringBuffer;
+	}
+
+	/**
+	 * Increment string by increasing last possible character
+	 * 
+	 * @param startString
+	 * @throws Exception
+	 */
+	private static void incrementString(StringBuffer startString) throws Exception {
+		incrementStringFromPosition(startString, 0);
+	}
+
+	private static void incrementStringFromPosition(StringBuffer stringBuffer, int pos) throws Exception {
+		if (pos == stringBuffer.length()) {
+			throw new Exception("Could not increment string: " + stringBuffer.toString());
+		}
+		int index = stringBuffer.length() - 1 - pos;
+		char c = stringBuffer.charAt(index);
+		if (index == 0 && c == 'Z')
+			throw new Exception("Could not increment string: " + stringBuffer.toString());
+		if (c != 'Z') {
+			stringBuffer.setCharAt(index, (char) (c + 1));
+		} else {
+			stringBuffer.setCharAt(index, 'A');
+			incrementStringFromPosition(stringBuffer, pos + 1);
+		}
+	}
 }
