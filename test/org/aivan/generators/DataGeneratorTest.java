@@ -116,4 +116,16 @@ public class DataGeneratorTest {
 		Assert.assertEquals("AAABA", strings[26]);
 		Assert.assertEquals("AAABB", strings[27]);
 	}
+	
+	@Test
+	public void orderedDescStringArrayTest() throws Exception {
+		String[] strings = DataGenerator.generateDescendingOrderedStringArray(STRING_ARRAY_LENGTH, 3);
+		Assert.assertNotNull(strings);
+		Assert.assertEquals(STRING_ARRAY_LENGTH, strings.length);
+		Assert.assertEquals("AAA", strings[STRING_ARRAY_LENGTH-1]);
+		Assert.assertEquals("AAB", strings[STRING_ARRAY_LENGTH-2]);
+		Assert.assertEquals("AAC", strings[STRING_ARRAY_LENGTH-3]);
+		Assert.assertEquals("AAD", strings[STRING_ARRAY_LENGTH-4]);
+		Assert.assertEquals("AAJ", strings[0]);
+	}
 }

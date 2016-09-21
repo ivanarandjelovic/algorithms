@@ -1,5 +1,7 @@
 package org.aivan.generators;
 
+import java.util.Arrays;
+
 /**
  * Utility class for generating all sorts of data (ordered, random, string,
  * numeric, etc.)
@@ -135,5 +137,23 @@ public class DataGenerator {
 			stringBuffer.setCharAt(index, 'A');
 			incrementStringFromPosition(stringBuffer, pos + 1);
 		}
+	}
+
+	/**
+	 * Generated descending ordered string array
+	 * 
+	 * @param arrayLength
+	 * @param stringLength
+	 * @return
+	 * @throws Exception
+	 */
+	public static String[] generateDescendingOrderedStringArray(int arrayLength, int stringLength) throws Exception {
+		String[] result = generateAscendingOrderedStringArray(arrayLength, stringLength);
+		for(int i=0;i<result.length/2;i++) {
+			String tmp = result[i];
+			result[i]=result[result.length-1-i];
+			result[result.length-1-i] = tmp;
+		}
+		return result;
 	}
 }
