@@ -116,16 +116,60 @@ public class DataGeneratorTest {
 		Assert.assertEquals("AAABA", strings[26]);
 		Assert.assertEquals("AAABB", strings[27]);
 	}
-	
+
 	@Test
 	public void orderedDescStringArrayTest() throws Exception {
 		String[] strings = DataGenerator.generateDescendingOrderedStringArray(STRING_ARRAY_LENGTH, 3);
 		Assert.assertNotNull(strings);
 		Assert.assertEquals(STRING_ARRAY_LENGTH, strings.length);
-		Assert.assertEquals("AAA", strings[STRING_ARRAY_LENGTH-1]);
-		Assert.assertEquals("AAB", strings[STRING_ARRAY_LENGTH-2]);
-		Assert.assertEquals("AAC", strings[STRING_ARRAY_LENGTH-3]);
-		Assert.assertEquals("AAD", strings[STRING_ARRAY_LENGTH-4]);
+		Assert.assertEquals("AAA", strings[STRING_ARRAY_LENGTH - 1]);
+		Assert.assertEquals("AAB", strings[STRING_ARRAY_LENGTH - 2]);
+		Assert.assertEquals("AAC", strings[STRING_ARRAY_LENGTH - 3]);
+		Assert.assertEquals("AAD", strings[STRING_ARRAY_LENGTH - 4]);
 		Assert.assertEquals("AAJ", strings[0]);
+	}
+
+	@Test
+	public void shuffledStringArrayTest() throws Exception {
+		String[] strings = DataGenerator.generateRandomOrderedStringArray(STRING_ARRAY_LENGTH, 10);
+		Assert.assertNotNull("Generated array must not be null", strings);
+		Assert.assertEquals("There should be exactly length elements", STRING_ARRAY_LENGTH, strings.length);
+
+		String[] original = Arrays.copyOf(strings, strings.length);
+
+		Arrays.sort(strings);
+
+		Assert.assertFalse(
+				"Array must not be equal to it self after soring (if this happens, then it's very, very unlikely, so re-run the test",
+				Arrays.equals(original, strings));
+		;
+	}
+
+	@Test
+	public void shuffledrandomStringArrayTest() throws Exception {
+		String[] strings = DataGenerator.generateRandomOrderedRandomLengthStringArray(STRING_ARRAY_LENGTH, 10);
+		Assert.assertNotNull("Generated array must not be null", strings);
+		Assert.assertEquals("There should be exactly length elements", STRING_ARRAY_LENGTH, strings.length);
+
+		String[] original = Arrays.copyOf(strings, strings.length);
+
+		Arrays.sort(strings);
+
+		Assert.assertFalse(
+				"Array must not be equal to it self after soring (if this happens, then it's very, very unlikely, so re-run the test",
+				Arrays.equals(original, strings));
+		;
+		int minLen = 10;
+		int maxLen = 0;
+		for (int i = 0; i < STRING_ARRAY_LENGTH; i++) {
+			int currLen = strings[i].length();
+			if (currLen > maxLen) {
+				maxLen = currLen;
+			}
+			if (currLen < minLen) {
+				minLen = currLen;
+			}
+		}
+		Assert.assertNotEquals(minLen, maxLen);
 	}
 }

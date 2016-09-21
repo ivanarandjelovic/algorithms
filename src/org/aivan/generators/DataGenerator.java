@@ -1,6 +1,6 @@
 package org.aivan.generators;
 
-import java.util.Arrays;
+import java.util.Random;
 
 /**
  * Utility class for generating all sorts of data (ordered, random, string,
@@ -71,6 +71,16 @@ public class DataGenerator {
 		for (int i = 0; i < result.length; i++) {
 			int swapIndex = (int) (Math.random() * result.length);
 			long tmp = result[i];
+			result[i] = result[swapIndex];
+			result[swapIndex] = tmp;
+		}
+		return result;
+	}
+
+	private static String[] shuffleArray(String[] result) {
+		for (int i = 0; i < result.length; i++) {
+			int swapIndex = (int) (Math.random() * result.length);
+			String tmp = result[i];
 			result[i] = result[swapIndex];
 			result[swapIndex] = tmp;
 		}
@@ -149,11 +159,38 @@ public class DataGenerator {
 	 */
 	public static String[] generateDescendingOrderedStringArray(int arrayLength, int stringLength) throws Exception {
 		String[] result = generateAscendingOrderedStringArray(arrayLength, stringLength);
-		for(int i=0;i<result.length/2;i++) {
+		for (int i = 0; i < result.length / 2; i++) {
 			String tmp = result[i];
-			result[i]=result[result.length-1-i];
-			result[result.length-1-i] = tmp;
+			result[i] = result[result.length - 1 - i];
+			result[result.length - 1 - i] = tmp;
 		}
 		return result;
 	}
+
+	public static String[] generateRandomOrderedStringArray(int arrayLength, int stringLength) throws Exception {
+		String[] result = generateAscendingOrderedStringArray(arrayLength, stringLength);
+		shuffleArray(result);
+		return result;
+	}
+
+	public static String[] generateRandomOrderedRandomLengthStringArray(int arrayLength, int maximumLength)
+			throws Exception {
+		String[] result = new String[arrayLength];
+		for (int i = 0; i < arrayLength; i++) {
+			result[i] = generateRandStringMaxLen(maximumLength);
+		}
+		return result;
+	}
+
+	static Random random = new Random();
+
+	private static String generateRandStringMaxLen(int maximumLength) {
+		int len = random.nextInt(maximumLength + 1);
+		StringBuffer sb = new StringBuffer(len);
+		for (int i = 0; i < len; i++) {
+			sb.append((char) ('A' + random.nextInt(26)));
+		}
+		return sb.toString();
+	}
+
 }
