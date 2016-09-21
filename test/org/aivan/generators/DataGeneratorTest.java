@@ -100,6 +100,7 @@ public class DataGeneratorTest {
 	@Test
 	public void orderedStringArrayTestLong() throws Exception {
 		try {
+			@SuppressWarnings("unused")
 			String[] strings = DataGenerator.generateAscendingOrderedStringArray(STRING_ARRAY_LENGTH_LONG, 2);
 		} catch (Exception e) {
 			Assert.assertNotNull(e);
@@ -114,8 +115,5 @@ public class DataGeneratorTest {
 		Assert.assertEquals("AAAAA", strings[0]);
 		Assert.assertEquals("AAABA", strings[26]);
 		Assert.assertEquals("AAABB", strings[27]);
-		for(int i=0;i<STRING_ARRAY_LENGTH_LONG;i++) {
-			System.out.println("i="+i+" "+strings[i]);
-		}
 	}
 }
