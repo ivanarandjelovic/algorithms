@@ -50,7 +50,18 @@ public class DataGenerator {
 	public static long[] generateRandomLongArray(int length) {
 		long[] result = new long[length];
 		for (int i = 0; i < length; i++) {
-			result[i] = (long) (Math.random() + length);
+			result[i] = (long) (Math.random() * length);
+		}
+		return result;
+	}
+
+	public static Long[] generateRandomLongObjArray(int length) {
+		Long[] result = new Long[length];
+		long[] tmp = generateRandomLongArray(length);
+		System.out.println(tmp.toString());
+		for (int i = 0; i < tmp.length; i++) {
+			System.out.println(result[i]);
+			result[i] = new Long(tmp[i]);
 		}
 		return result;
 	}
