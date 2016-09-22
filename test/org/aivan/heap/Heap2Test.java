@@ -15,12 +15,16 @@ import org.junit.runners.MethodSorters;
 public class Heap2Test {
 
 	protected static long acumulatedDiff = 0;
+	protected static long acumulatedSystem = 0;
 
 	@Test
 	public void z99_reportDiff() throws Exception {
-		System.out.println("===================================");
-		System.out.println("Accumulated diff = " + acumulatedDiff);
-		System.out.println("===================================");
+		log.info("===================================");
+		log.info("Accumulated diff = " + acumulatedDiff + " (" + ((int) (100.0 * (acumulatedDiff * 1.0 / acumulatedSystem)))
+		    + "%)");
+		log.info("Accumulated sys  = " + acumulatedSystem + " ("
+		    + ((int) (100.0 * (acumulatedDiff * 1.0 / acumulatedSystem))) + "%)");
+		log.info("===================================");
 	}
 
 	private static final int SMALL_ARRAY_SIZE = 1000;
@@ -28,7 +32,7 @@ public class Heap2Test {
 	private static final int LARGE_ARRAY_SIZE = 1000000;
 	private static final int HUGE_ARRAY_SIZE = 10000000;
 
-	protected static final Logger log = LogManager.getLogger(Heap1Test.class);
+	protected static final Logger log = LogManager.getLogger(Heap2Test.class);
 
 	@Test
 	public void a1_heapTestSmallString() throws Exception {
@@ -51,7 +55,7 @@ public class Heap2Test {
 	// }
 
 	private void heapStringSort(int arraySize) throws Exception {
-		System.out.println("--------------------------------");
+		log.debug("--------------------------------");
 		String[] arr = DataGenerator.generateRandomOrderedStringArray(arraySize, 10);
 
 		String[] systemSorted = Arrays.copyOf(arr, arr.length);
@@ -64,7 +68,8 @@ public class Heap2Test {
 		Arrays.sort(systemSorted);
 		sw1.stop();
 
-		System.out.println("System sorted time for " + arraySize + " elements: " + sw1.getTime());
+		acumulatedSystem += sw1.getTime();
+		log.debug("System sorted time for " + arraySize + " elements: " + sw1.getTime());
 
 		sw2.start();
 		Heap2<String> heap = new Heap2<String>();
@@ -75,7 +80,7 @@ public class Heap2Test {
 		}
 		sw2.stop();
 
-		System.out.println("Heap1 sorted time for " + arraySize + " elements: " + sw2.getTime());
+		log.debug("Heap1 sorted time for " + arraySize + " elements: " + sw2.getTime());
 
 		acumulatedDiff += (sw2.getTime() - sw1.getTime());
 
@@ -103,7 +108,7 @@ public class Heap2Test {
 	// }
 
 	private void heapLongSort(int arraySize) {
-		System.out.println("--------------------------------");
+		log.debug("--------------------------------");
 		Long[] arr = DataGenerator.generateRandomLongObjArray(arraySize);
 
 		Long[] systemSorted = Arrays.copyOf(arr, arr.length);
@@ -116,7 +121,8 @@ public class Heap2Test {
 		Arrays.sort(systemSorted);
 		sw1.stop();
 
-		System.out.println("System sorted time for " + arraySize + " elements: " + sw1.getTime());
+		acumulatedSystem += sw1.getTime();
+		log.debug("System sorted time for " + arraySize + " elements: " + sw1.getTime());
 
 		sw2.start();
 		Heap2<Long> heap = new Heap2<Long>();
@@ -127,7 +133,7 @@ public class Heap2Test {
 		}
 		sw2.stop();
 
-		System.out.println("Heap1 sorted time for " + arraySize + " elements: " + sw2.getTime());
+		log.debug("Heap1 sorted time for " + arraySize + " elements: " + sw2.getTime());
 
 		acumulatedDiff += (sw2.getTime() - sw1.getTime());
 

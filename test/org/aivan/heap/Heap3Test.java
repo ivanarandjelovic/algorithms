@@ -12,11 +12,11 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class Heap1Test {
+public class Heap3Test {
 
 	protected static long acumulatedDiff = 0;
 	protected static long acumulatedSystem = 0;
-
+	
 	@Test
 	public void z99_reportDiff() throws Exception {
 		log.info("===================================");
@@ -27,12 +27,12 @@ public class Heap1Test {
 		log.info("===================================");
 	}
 
-	private static final int SMALL_ARRAY_SIZE = 20000;
-	private static final int MEDIUM_ARRAY_SIZE = 200000;
-	private static final int LARGE_ARRAY_SIZE = 2000000;
-	private static final int HUGE_ARRAY_SIZE = 20000000;
+	private static final int SMALL_ARRAY_SIZE = 1000;
+	private static final int MEDIUM_ARRAY_SIZE = 100000;
+	private static final int LARGE_ARRAY_SIZE = 1000000;
+	private static final int HUGE_ARRAY_SIZE = 10000000;
 
-	protected static final Logger log = LogManager.getLogger(Heap1Test.class);
+	protected static final Logger log = LogManager.getLogger(Heap3Test.class);
 
 	@Test
 	public void a1_heapTestSmallString() throws Exception {
@@ -68,11 +68,11 @@ public class Heap1Test {
 		Arrays.sort(systemSorted);
 		sw1.stop();
 
-		acumulatedSystem += sw1.getTime();
+		acumulatedSystem+=sw1.getTime();
 		log.debug("System sorted time for " + arraySize + " elements: " + sw1.getTime());
 
 		sw2.start();
-		Heap1<String> heap = new Heap1<String>();
+		Heap3<String> heap = new Heap3<String>();
 		heap.buildHeap(arr);
 		int index = 0;
 		while (heap.size > 0) {
@@ -121,11 +121,11 @@ public class Heap1Test {
 		Arrays.sort(systemSorted);
 		sw1.stop();
 
-		acumulatedSystem += sw1.getTime();
+		acumulatedSystem+=sw1.getTime();
 		log.debug("System sorted time for " + arraySize + " elements: " + sw1.getTime());
 
 		sw2.start();
-		Heap1<Long> heap = new Heap1<Long>();
+		Heap3<Long> heap = new Heap3<Long>();
 		heap.buildHeap(arr);
 		int index = 0;
 		while (heap.size > 0) {
@@ -139,5 +139,4 @@ public class Heap1Test {
 
 		Assert.assertTrue(Arrays.equals(systemSorted, heapSorted));
 	}
-
 }
