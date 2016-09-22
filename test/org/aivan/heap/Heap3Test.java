@@ -7,6 +7,8 @@ import org.apache.commons.lang3.time.StopWatch;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
@@ -16,7 +18,7 @@ public class Heap3Test {
 
 	protected static long acumulatedDiff = 0;
 	protected static long acumulatedSystem = 0;
-	
+
 	@Test
 	public void z99_reportDiff() throws Exception {
 		log.info("===================================");
@@ -25,6 +27,21 @@ public class Heap3Test {
 		log.info("Accumulated sys  = " + acumulatedSystem + " ("
 		    + ((int) (100.0 * (acumulatedDiff * 1.0 / acumulatedSystem))) + "%)");
 		log.info("===================================");
+	}
+
+	@Before
+	public void gc() {
+		System.gc();
+		System.gc();
+		System.gc();
+		System.gc();
+		System.gc();
+	}
+
+	@Test
+	public void ___1_reset() {
+		acumulatedDiff = 0;
+		acumulatedSystem = 0;
 	}
 
 	private static final int SMALL_ARRAY_SIZE = 1000;
@@ -68,7 +85,7 @@ public class Heap3Test {
 		Arrays.sort(systemSorted);
 		sw1.stop();
 
-		acumulatedSystem+=sw1.getTime();
+		acumulatedSystem += sw1.getTime();
 		log.debug("System sorted time for " + arraySize + " elements: " + sw1.getTime());
 
 		sw2.start();
@@ -80,7 +97,7 @@ public class Heap3Test {
 		}
 		sw2.stop();
 
-		log.debug("Heap1 sorted time for " + arraySize + " elements: " + sw2.getTime());
+		log.debug("Heap sorted time for " + arraySize + " elements: " + sw2.getTime());
 
 		acumulatedDiff += (sw2.getTime() - sw1.getTime());
 
@@ -121,7 +138,7 @@ public class Heap3Test {
 		Arrays.sort(systemSorted);
 		sw1.stop();
 
-		acumulatedSystem+=sw1.getTime();
+		acumulatedSystem += sw1.getTime();
 		log.debug("System sorted time for " + arraySize + " elements: " + sw1.getTime());
 
 		sw2.start();
@@ -133,7 +150,7 @@ public class Heap3Test {
 		}
 		sw2.stop();
 
-		log.debug("Heap1 sorted time for " + arraySize + " elements: " + sw2.getTime());
+		log.debug("Heap sorted time for " + arraySize + " elements: " + sw2.getTime());
 
 		acumulatedDiff += (sw2.getTime() - sw1.getTime());
 

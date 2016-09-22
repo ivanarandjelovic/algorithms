@@ -7,6 +7,8 @@ import org.apache.commons.lang3.time.StopWatch;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
@@ -27,6 +29,21 @@ public class Heap1Test {
 		log.info("===================================");
 	}
 
+	@Before
+	public void gc() {
+		System.gc();
+		System.gc();
+		System.gc();
+		System.gc();
+		System.gc();
+	}
+	
+	@Test
+	public void ___1_reset() {
+		acumulatedDiff = 0;
+		acumulatedSystem = 0;
+	}
+	
 	private static final int SMALL_ARRAY_SIZE = 20000;
 	private static final int MEDIUM_ARRAY_SIZE = 200000;
 	private static final int LARGE_ARRAY_SIZE = 2000000;
@@ -80,7 +97,7 @@ public class Heap1Test {
 		}
 		sw2.stop();
 
-		log.debug("Heap1 sorted time for " + arraySize + " elements: " + sw2.getTime());
+		log.debug("Heap sorted time for " + arraySize + " elements: " + sw2.getTime());
 
 		acumulatedDiff += (sw2.getTime() - sw1.getTime());
 
@@ -133,7 +150,7 @@ public class Heap1Test {
 		}
 		sw2.stop();
 
-		log.debug("Heap1 sorted time for " + arraySize + " elements: " + sw2.getTime());
+		log.debug("Heap sorted time for " + arraySize + " elements: " + sw2.getTime());
 
 		acumulatedDiff += (sw2.getTime() - sw1.getTime());
 
