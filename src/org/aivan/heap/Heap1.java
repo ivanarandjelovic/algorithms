@@ -6,33 +6,9 @@ package org.aivan.heap;
  * @author aivan
  *
  */
-public class Heap1<T extends Comparable<T>> {
+public class Heap1<T extends Comparable<T>> extends Heap<T> {
 
-	T[] elements;
-	int size = 0;
-	int levels = 0;
-
-	public void buildHeap(T[] array) {
-		this.elements = array;
-
-		this.size = elements.length;
-
-		// System.out.println("start: " + this.toString());
-
-		int tmp = 1;
-		while (tmp <= this.size) {
-			levels++;
-			tmp *= 2;
-		}
-		// System.out.println("size=" + size + ", levels=" + levels);
-		for (int i = size / 2; i >= 0; i--) {
-			bubbleDown(i);
-		}
-		// System.out.println("Final=" + this.toString());
-
-	}
-
-	private void bubbleDown(int i) {
+	protected void bubbleDown(int i) {
 		// System.out.println(this.toString());
 		// System.out.println("enering bubble down with i:" + i);
 		if (i * 2 >= this.size) {
@@ -62,31 +38,6 @@ public class Heap1<T extends Comparable<T>> {
 				bubbleDown(i * 2 + 1);
 			}
 		}
-	}
-
-	public T pop() {
-		if (this.size > 0) {
-			// Minimum element is on the top
-			T min = elements[0];
-
-			elements[0] = elements[this.size - 1];
-			elements[this.size - 1] = null;
-			this.size--;
-			bubbleDown(0);
-			return min;
-		} else {
-			return null;
-		}
-	}
-
-	@Override
-	public String toString() {
-		String result = "";
-
-		for (int i = 0; i < this.size; i++) {
-			result += "[" + i + "]:" + elements[i] + ",";
-		}
-		return result;
 	}
 
 }
