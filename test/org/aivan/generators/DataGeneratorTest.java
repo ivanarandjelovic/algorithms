@@ -12,20 +12,20 @@ public class DataGeneratorTest {
 
 	@Test
 	public void orderedLongLengthZeroTest() {
-		long[] longs = DataGenerator.generateAscendingOrderedLongArray(0);
+		Long[] longs = DataGenerator.generateAscendingOrderedLongArray(0);
 		Assert.assertNotNull("Generated array must not be null", longs);
 		Assert.assertEquals(longs.length, 0);
 	}
 
 	@Test
 	public void orderedLongTest() {
-		long[] longs = DataGenerator.generateAscendingOrderedLongArray(INT_ARRAY_LENGTH);
+		Long[] longs = DataGenerator.generateAscendingOrderedLongArray(INT_ARRAY_LENGTH);
 		Assert.assertNotNull("Generated array must not be null", longs);
 		for (int i = 0; i < INT_ARRAY_LENGTH; i++) {
-			Assert.assertEquals("Ascending array of ints must contain elements equal to index", i, longs[i]);
+			Assert.assertEquals("Ascending array of ints must contain elements equal to index", i, longs[i].intValue());
 		}
-		Assert.assertEquals("First element is 0", longs[0], 0);
-		Assert.assertEquals("Last element is length-1", INT_ARRAY_LENGTH - 1, longs[INT_ARRAY_LENGTH - 1]);
+		Assert.assertEquals("First element is 0", longs[0], new Long(0));
+		Assert.assertEquals("Last element is length-1", INT_ARRAY_LENGTH - 1, longs[INT_ARRAY_LENGTH - 1].intValue());
 		Assert.assertEquals("There should be exactly length elements", INT_ARRAY_LENGTH, longs.length);
 
 	}
@@ -67,16 +67,16 @@ public class DataGeneratorTest {
 
 	@Test
 	public void shuffledArrayTest() {
-		long[] longs = DataGenerator.generateRandomSequentialLongArray(INT_ARRAY_LENGTH);
+		Long[] longs = DataGenerator.generateRandomSequentialLongArray(INT_ARRAY_LENGTH);
 		Assert.assertNotNull("Generated array must not be null", longs);
 		Assert.assertEquals("There should be exactly length elements", INT_ARRAY_LENGTH, longs.length);
 
-		long[] original = Arrays.copyOf(longs, longs.length);
+		Long[] original = Arrays.copyOf(longs, longs.length);
 
 		Arrays.sort(longs);
 		for (int i = 0; i < INT_ARRAY_LENGTH; i++) {
 			Assert.assertEquals("Ascending array of ints must contain elements equal to index after sorting", i,
-					longs[i]);
+					longs[i].intValue());
 		}
 
 		Assert.assertFalse(

@@ -18,10 +18,10 @@ public class DataGenerator {
 	 * @param length
 	 * @return
 	 */
-	public static long[] generateAscendingOrderedLongArray(int length) {
-		long[] result = new long[length];
+	public static Long[] generateAscendingOrderedLongArray(int length) {
+		Long[] result = new Long[length];
 		for (int i = 0; i < length; i++) {
-			result[i] = i;
+			result[i] = new Long(i);
 		}
 		return result;
 	}
@@ -72,16 +72,16 @@ public class DataGenerator {
 	 * @param length
 	 * @return
 	 */
-	public static long[] generateRandomSequentialLongArray(int length) {
-		long[] result = generateAscendingOrderedLongArray(length);
+	public static Long[] generateRandomSequentialLongArray(int length) {
+		Long[] result = generateAscendingOrderedLongArray(length);
 		shuffleArray(result);
 		return result;
 	}
 
-	private static long[] shuffleArray(long[] result) {
+	private static Long[] shuffleArray(Long[] result) {
 		for (int i = 0; i < result.length; i++) {
 			int swapIndex = (int) (Math.random() * result.length);
-			long tmp = result[i];
+			Long tmp = result[i];
 			result[i] = result[swapIndex];
 			result[swapIndex] = tmp;
 		}

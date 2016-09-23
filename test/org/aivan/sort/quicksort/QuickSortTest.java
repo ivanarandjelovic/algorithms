@@ -9,8 +9,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public abstract class QuickSortTest extends TimedTest {
 
 	public static final Logger log = LogManager.getLogger(QuickSortTest.class);
@@ -31,10 +34,18 @@ public abstract class QuickSortTest extends TimedTest {
 		sortOneArray(LARGE_ARRAY_SIZE);
 
 	}
+	
+	@Test
+	public void a2_longSort() throws Exception {
+		sortOneLongArray(SMALL_ARRAY_SIZE);
+		sortOneLongArray(MEDIUM_ARRAY_SIZE);
+		sortOneLongArray(LARGE_ARRAY_SIZE);
+
+	}
 
 	private void sortOneArray(int arraySize) throws Exception {
 		resetTimers();
-		String[] arr = DataGenerator.generateRandomOrderedStringArray(arraySize, 10);
+		String[] arr = generateStringArray(arraySize);
 
 		String[] systemSorted = systemSort(arr);
 
@@ -48,6 +59,29 @@ public abstract class QuickSortTest extends TimedTest {
 		Assert.assertTrue(Arrays.equals(systemSorted, arr));
 	}
 
+	protected abstract String[] generateStringArray(int arraySize) throws Exception;
+
+
+	protected abstract Long[] generateLongArray(int arraySize);
+	
+	
+	private void sortOneLongArray(int arraySize) throws Exception {
+		resetTimers();
+		Long[] arr = generateLongArray(arraySize);
+
+		Long[] systemSorted = systemSort(arr);
+
+		QuickSort<Long> qsort = getQuickSortLong();
+		sw2.start();
+		qsort.sort(arr);
+		sw2.stop();
+		log.debug("Custom sorted time for " + arraySize + " elements: " + sw2.getTime());
+
+		acumulatedDiff += (sw2.getTime() - sw1.getTime());
+		Assert.assertTrue(Arrays.equals(systemSorted, arr));
+	}
+
+
 	private String[] systemSort(String[] arr) {
 		String[] systemSorted = Arrays.copyOf(arr, arr.length);
 
@@ -60,8 +94,22 @@ public abstract class QuickSortTest extends TimedTest {
 
 		return systemSorted;
 	}
+	
+	private Long[] systemSort(Long[] arr) {
+		Long[] systemSorted = Arrays.copyOf(arr, arr.length);
 
-	abstract QuickSort<String> getQuickSort();
+		sw1.start();
+		Arrays.sort(systemSorted);
+		sw1.stop();
+
+		acumulatedSystem += sw1.getTime();
+		log.debug("System sorted time for " + arr.length + " elements: " + sw1.getTime());
+
+		return systemSorted;
+	}
+
+	protected abstract QuickSort<String> getQuickSort();
+	protected abstract QuickSort<Long> getQuickSortLong();
 
 	// @Test
 	// public void a2_longSort() throws Exception {

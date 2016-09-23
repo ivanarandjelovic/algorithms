@@ -2,7 +2,7 @@ package org.aivan.sort.quicksort;
 
 import org.junit.Test;
 
-public class QuickSortPivotFirstTest extends QuickSortRandomArraysTest {
+public class QuickSortPivotRandomTest extends QuickSortRandomArraysTest {
 
 	@Test
 	public void ___1_reset() {
@@ -13,13 +13,13 @@ public class QuickSortPivotFirstTest extends QuickSortRandomArraysTest {
 	@Override
 	protected
 	QuickSort<String> getQuickSort() {
-		return new QuickSortPivotIsFirstElement<String>();
+		return new QuickSortPivotRandom<String>();
 	}
 
 	@Override
 	protected
 	QuickSort<Long> getQuickSortLong() {
-		return new QuickSortPivotIsFirstElement<Long>();
+		return new QuickSortPivotRandom<Long>();
 	}
 
 	

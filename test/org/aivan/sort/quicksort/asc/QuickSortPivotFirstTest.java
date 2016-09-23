@@ -1,8 +1,10 @@
-package org.aivan.sort.quicksort;
+package org.aivan.sort.quicksort.asc;
 
+import org.aivan.sort.quicksort.QuickSort;
+import org.aivan.sort.quicksort.QuickSortPivotIsFirstElement;
 import org.junit.Test;
 
-public class QuickSortPivotFirstTest extends QuickSortRandomArraysTest {
+public class QuickSortPivotFirstTest extends QuickSortAscendingArrayTest {
 
 	@Test
 	public void ___1_reset() {
