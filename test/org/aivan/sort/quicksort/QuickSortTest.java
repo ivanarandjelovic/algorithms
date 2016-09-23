@@ -4,7 +4,6 @@ import java.util.Arrays;
 
 import org.aivan.TimedTest;
 import org.aivan.generators.DataGenerator;
-import org.aivan.heap.HeapTest;
 import org.apache.commons.lang3.time.StopWatch;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,13 +18,7 @@ public abstract class QuickSortTest extends TimedTest {
 	StopWatch sw1 = new StopWatch();
 	StopWatch sw2 = new StopWatch();
 
-	@Test
-	public void ___1_reset() {
-		acumulatedDiff = 0;
-		acumulatedSystem = 0;
-	}
 
-	@Before
 	public void resetTimers() {
 		sw1 = new StopWatch();
 		sw2 = new StopWatch();
@@ -33,28 +26,26 @@ public abstract class QuickSortTest extends TimedTest {
 
 	@Test
 	public void a1_stringSort() throws Exception {
-		String[] arr = DataGenerator.generateRandomOrderedStringArray(SMALL_ARRAY_SIZE, 10);
+		sortOneArray(SMALL_ARRAY_SIZE);
+		sortOneArray(MEDIUM_ARRAY_SIZE);
+		sortOneArray(LARGE_ARRAY_SIZE);
+
+	}
+
+	private void sortOneArray(int arraySize) throws Exception {
+		resetTimers();
+		String[] arr = DataGenerator.generateRandomOrderedStringArray(arraySize, 10);
 
 		String[] systemSorted = systemSort(arr);
 
 		QuickSort<String> qsort = getQuickSort();
+		sw2.start();
 		qsort.sort(arr);
+		sw2.stop();
+		log.debug("Custom sorted time for " + arraySize + " elements: " + sw2.getTime());
 
-
-//		int index = 0;
-//		for (String s : systemSorted) {
-//			System.out.print(index++ + ": " + s + ", ");
-//		}
-//		System.out.println();
-
-//		index = 0;
-//		for (String s : arr) {
-//			System.out.print(index++ + ": " + s + ", ");
-//		}
-//		System.out.println();
-
+		acumulatedDiff += (sw2.getTime() - sw1.getTime());
 		Assert.assertTrue(Arrays.equals(systemSorted, arr));
-
 	}
 
 	private String[] systemSort(String[] arr) {
