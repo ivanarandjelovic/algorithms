@@ -1,11 +1,12 @@
-package org.aivan.sort.quicksort.asc;
+package org.aivan.sort.mergesort.random;
 
 import org.aivan.sort.Sort;
-import org.aivan.sort.SortAscendingArrayTest;
+import org.aivan.sort.SortRandomArraysTest;
+import org.aivan.sort.mergesort.MergeSort;
 import org.aivan.sort.quicksort.QuickSortPivotIsFirstElement;
 import org.junit.Test;
 
-public class QuickSortPivotFirstTest extends SortAscendingArrayTest {
+public class MergeSortTest extends SortRandomArraysTest {
 
 	@Test
 	public void ___1_reset() {
@@ -16,13 +17,13 @@ public class QuickSortPivotFirstTest extends SortAscendingArrayTest {
 	@Override
 	protected
 	Sort<String> getSortString() {
-		return new QuickSortPivotIsFirstElement<String>();
+		return new MergeSort<String>();
 	}
 
 	@Override
 	protected
 	Sort<Long> getSortLong() {
-		return new QuickSortPivotIsFirstElement<Long>();
+		return new MergeSort<Long>();
 	}
 
 	

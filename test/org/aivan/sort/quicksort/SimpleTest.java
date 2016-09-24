@@ -2,6 +2,7 @@ package org.aivan.sort.quicksort;
 
 import org.aivan.TimedTest;
 import org.aivan.generators.DataGenerator;
+import org.aivan.sort.Sort;
 import org.junit.Test;
 
 public class SimpleTest extends TimedTest {
@@ -15,7 +16,7 @@ public class SimpleTest extends TimedTest {
 		//Long[] x = DataGenerator.generateDescendingOrderedLongArray(3000);
 		//Long[] x = DataGenerator.generateAscendingOrderedLongArray(SMALL_ARRAY_SIZE);
 		Long[] x = DataGenerator.generateRandomLongObjArray(SMALL_ARRAY_SIZE);
-		QuickSort<Long> sort = new QuickSortPivotIsFirstElement<Long>();
+		Sort<Long> sort = new QuickSortPivotIsFirstElement<Long>();
 		sort.sort(x);
 		for(Long l: x) {
 			System.out.println(l);

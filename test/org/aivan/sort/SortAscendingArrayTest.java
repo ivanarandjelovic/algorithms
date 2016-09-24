@@ -1,8 +1,8 @@
-package org.aivan.sort.quicksort;
+package org.aivan.sort;
 
 import org.aivan.generators.DataGenerator;
 
-public abstract class QuickSortAscendingArrayTest extends QuickSortTest {
+public abstract class SortAscendingArrayTest extends SortTest {
 
 	protected String[] generateStringArray(int arraySize) throws Exception {
 		return DataGenerator.generateAscendingOrderedStringArray(arraySize, 10);

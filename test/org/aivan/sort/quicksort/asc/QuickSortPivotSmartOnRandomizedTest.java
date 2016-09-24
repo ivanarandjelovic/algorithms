@@ -1,11 +1,11 @@
 package org.aivan.sort.quicksort.asc;
 
-import org.aivan.sort.quicksort.QuickSort;
-import org.aivan.sort.quicksort.QuickSortAscendingArrayTest;
+import org.aivan.sort.Sort;
+import org.aivan.sort.SortAscendingArrayTest;
 import org.aivan.sort.quicksort.QuickSortPivotSmartOnRandom;
 import org.junit.Test;
 
-public class QuickSortPivotSmartOnRandomizedTest extends QuickSortAscendingArrayTest {
+public class QuickSortPivotSmartOnRandomizedTest extends SortAscendingArrayTest {
 
 	@Test
 	public void ___1_reset() {
@@ -15,13 +15,13 @@ public class QuickSortPivotSmartOnRandomizedTest extends QuickSortAscendingArray
 
 	@Override
 	protected
-	QuickSort<String> getQuickSort() {
+	Sort<String> getSortString() {
 		return new QuickSortPivotSmartOnRandom<String>();
 	}
 
 	@Override
 	protected
-	QuickSort<Long> getQuickSortLong() {
+	Sort<Long> getSortLong() {
 		return new QuickSortPivotSmartOnRandom<Long>();
 	}
 	

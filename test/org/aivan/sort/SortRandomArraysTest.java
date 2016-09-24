@@ -1,8 +1,8 @@
-package org.aivan.sort.quicksort;
+package org.aivan.sort;
 
 import org.aivan.generators.DataGenerator;
 
-public abstract class QuickSortRandomArraysTest extends QuickSortTest {
+public abstract class SortRandomArraysTest extends SortTest {
 
 	protected String[] generateStringArray(int arraySize) throws Exception {
 		return DataGenerator.generateRandomOrderedStringArray(arraySize, 10);

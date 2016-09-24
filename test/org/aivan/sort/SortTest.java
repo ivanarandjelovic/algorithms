@@ -1,22 +1,21 @@
-package org.aivan.sort.quicksort;
+package org.aivan.sort;
 
 import java.util.Arrays;
 
 import org.aivan.TimedTest;
-import org.aivan.generators.DataGenerator;
+import org.aivan.sort.Sort;
 import org.apache.commons.lang3.time.StopWatch;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public abstract class QuickSortTest extends TimedTest {
+public abstract class SortTest extends TimedTest {
 
-	public static final Logger log = LogManager.getLogger(QuickSortTest.class);
+	public static final Logger log = LogManager.getLogger(SortTest.class);
 
 	StopWatch sw1 = new StopWatch();
 	StopWatch sw2 = new StopWatch();
@@ -49,7 +48,7 @@ public abstract class QuickSortTest extends TimedTest {
 
 		String[] systemSorted = systemSort(arr);
 
-		QuickSort<String> qsort = getQuickSort();
+		Sort<String> qsort = getSortString();
 		sw2.start();
 		qsort.sort(arr);
 		sw2.stop();
@@ -71,7 +70,7 @@ public abstract class QuickSortTest extends TimedTest {
 
 		Long[] systemSorted = systemSort(arr);
 
-		QuickSort<Long> qsort = getQuickSortLong();
+	  Sort<Long> qsort = getSortLong();
 		sw2.start();
 		qsort.sort(arr);
 		sw2.stop();
@@ -108,17 +107,9 @@ public abstract class QuickSortTest extends TimedTest {
 		return systemSorted;
 	}
 
-	protected abstract QuickSort<String> getQuickSort();
-	protected abstract QuickSort<Long> getQuickSortLong();
+	protected abstract Sort<String> getSortString();
+	protected abstract Sort<Long> getSortLong();
 
-	// @Test
-	// public void a2_longSort() throws Exception {
-	// Long[] arr = DataGenerator.generateRandomLongObjArray(SMALL_ARRAY_SIZE);
-	// heapSort(arr, Long.class, new Heap1<Long>());
-	// arr = DataGenerator.generateRandomLongObjArray(MEDIUM_ARRAY_SIZE);
-	// heapSort(arr, Long.class, new Heap1<Long>());
-	// arr = DataGenerator.generateRandomLongObjArray(LARGE_ARRAY_SIZE);
-	// heapSort(arr, Long.class, new Heap1<Long>());
-	// }
+
 
 }
