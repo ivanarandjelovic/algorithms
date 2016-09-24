@@ -33,10 +33,10 @@ public class DataGenerator {
 	 * @param length
 	 * @return
 	 */
-	public static long[] generateDescendingOrderedLongArray(int length) {
-		long[] result = new long[length];
+	public static Long[] generateDescendingOrderedLongArray(int length) {
+		Long[] result = new Long[length];
 		for (int i = 0; i < length; i++) {
-			result[i] = length - i - 1;
+			result[i] = new Long(length - i - 1);
 		}
 		return result;
 	}

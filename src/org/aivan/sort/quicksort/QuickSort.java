@@ -6,10 +6,10 @@ public abstract class QuickSort<T extends Comparable<T>> implements Sort<T> {
 
 	@Override
 	public void sort(T[] array) {
-		qsort(array, 0, array.length - 1);
+		qsort(array, 0, array.length - 1, 0);
 	}
 
-	private void qsort(T[] array, int start, int end) {
+	private void qsort(T[] array, int start, int end, int depth) {
 		if (start >= end) {
 			// End of recursion, one or zero elements remained
 			return;
@@ -42,8 +42,8 @@ public abstract class QuickSort<T extends Comparable<T>> implements Sort<T> {
 			}
 		}
 		
-//		System.out.println("left,right = "+left+","+right);
-//
+//		System.out.println("start, right, left, end = "+start+", "+right+","+left+", "+end+" - depth "+depth);
+
 //		System.out.println("after (left, right = " + left + "," + right + "):");
 //		for (int index = start; index <= end; index++) {
 //			System.out.print(index + ": " + array[index] + ", ");
@@ -51,8 +51,8 @@ public abstract class QuickSort<T extends Comparable<T>> implements Sort<T> {
 //		System.out.println();
 
 		// now recursively sort other parts:
-		qsort(array, start, right);
-		qsort(array, left , end);
+		qsort(array, start, right, depth+1);
+		qsort(array, left , end, depth+1);
 
 //		if (array[left].compareTo(pivot) < 0) {
 //			qsort(array, start, right);
