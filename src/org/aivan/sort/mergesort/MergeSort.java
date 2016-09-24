@@ -6,7 +6,6 @@ public class MergeSort<T extends Comparable<T>> implements Sort<T> {
 
 	Object[] mergeArea;
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void sort(T[] array) {
 		mergeArea = new Object[array.length];

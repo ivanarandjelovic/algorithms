@@ -35,6 +35,6 @@ public class TimedTest {
 	protected static final int SMALL_ARRAY_SIZE = 50000;
 	protected static final int MEDIUM_ARRAY_SIZE = 500000;
 	protected static final int LARGE_ARRAY_SIZE = 5000000;
-	private static final int HUGE_ARRAY_SIZE = 50000000;
+	protected static final int HUGE_ARRAY_SIZE = 50000000;
 
 }

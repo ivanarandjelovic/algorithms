@@ -31,7 +31,7 @@ public abstract class SortTest extends TimedTest {
 		sortOneArray(SMALL_ARRAY_SIZE);
 		sortOneArray(MEDIUM_ARRAY_SIZE);
 		sortOneArray(LARGE_ARRAY_SIZE);
-
+		//sortOneArray(HUGE_ARRAY_SIZE);
 	}
 	
 	@Test
@@ -39,7 +39,7 @@ public abstract class SortTest extends TimedTest {
 		sortOneLongArray(SMALL_ARRAY_SIZE);
 		sortOneLongArray(MEDIUM_ARRAY_SIZE);
 		sortOneLongArray(LARGE_ARRAY_SIZE);
-
+		//sortOneArray(HUGE_ARRAY_SIZE);
 	}
 
 	private void sortOneArray(int arraySize) throws Exception {

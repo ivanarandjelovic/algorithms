@@ -3,7 +3,6 @@ package org.aivan.sort.mergesort.random;
 import org.aivan.sort.Sort;
 import org.aivan.sort.SortRandomArraysTest;
 import org.aivan.sort.mergesort.MergeSort;
-import org.aivan.sort.quicksort.QuickSortPivotIsFirstElement;
 import org.junit.Test;
 
 public class MergeSortTest extends SortRandomArraysTest {

@@ -1,7 +1,5 @@
 package org.aivan.sort.quicksort;
 
-import java.util.Random;
-
 public class QuickSortPivotSmartOnRandom<T extends Comparable<T>> extends QuickSortWithRandomization<T> {
 
 	@Override

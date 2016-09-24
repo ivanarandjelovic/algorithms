@@ -1,8 +1,6 @@
 package org.aivan.heap;
 
 import org.aivan.generators.DataGenerator;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
