@@ -9,7 +9,7 @@ public abstract class QuickSort<T extends Comparable<T>> implements Sort<T> {
 		qsort(array, 0, array.length - 1, 0);
 	}
 
-	private void qsort(T[] array, int start, int end, int depth) {
+	protected void qsort(T[] array, int start, int end, int depth) {
 		if (start >= end) {
 			// End of recursion, one or zero elements remained
 			return;

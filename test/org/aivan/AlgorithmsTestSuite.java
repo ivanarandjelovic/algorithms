@@ -1,9 +1,9 @@
 package org.aivan;
 
 import org.aivan.generators.DataGeneratorTest;
-import org.aivan.sort.quicksort.QuickSortPivotFirstTest;
-import org.aivan.sort.quicksort.QuickSortPivotRandomTest;
-import org.aivan.sort.quicksort.QuickSortPivotSmartTest;
+import org.aivan.sort.quicksort.random.QuickSortPivotFirstTest;
+import org.aivan.sort.quicksort.random.QuickSortPivotRandomTest;
+import org.aivan.sort.quicksort.random.QuickSortPivotSmartTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 

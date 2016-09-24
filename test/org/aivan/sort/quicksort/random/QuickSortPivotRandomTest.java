@@ -1,5 +1,8 @@
-package org.aivan.sort.quicksort;
+package org.aivan.sort.quicksort.random;
 
+import org.aivan.sort.quicksort.QuickSort;
+import org.aivan.sort.quicksort.QuickSortPivotRandom;
+import org.aivan.sort.quicksort.QuickSortRandomArraysTest;
 import org.junit.Test;
 
 public class QuickSortPivotRandomTest extends QuickSortRandomArraysTest {

@@ -1,7 +1,6 @@
-package org.aivan.sort.quicksort.asc;
+package org.aivan.sort.quicksort;
 
 import org.aivan.generators.DataGenerator;
-import org.aivan.sort.quicksort.QuickSortTest;
 
 public abstract class QuickSortAscendingArrayTest extends QuickSortTest {
 

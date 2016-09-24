@@ -2,10 +2,10 @@ package org.aivan.sort.quicksort.asc;
 
 import org.aivan.sort.quicksort.QuickSort;
 import org.aivan.sort.quicksort.QuickSortAscendingArrayTest;
-import org.aivan.sort.quicksort.QuickSortPivotRandom;
+import org.aivan.sort.quicksort.QuickSortPivotSmartOnRandom;
 import org.junit.Test;
 
-public class QuickSortPivotRandomTest extends QuickSortAscendingArrayTest {
+public class QuickSortPivotSmartOnRandomizedTest extends QuickSortAscendingArrayTest {
 
 	@Test
 	public void ___1_reset() {
@@ -16,14 +16,15 @@ public class QuickSortPivotRandomTest extends QuickSortAscendingArrayTest {
 	@Override
 	protected
 	QuickSort<String> getQuickSort() {
-		return new QuickSortPivotRandom<String>();
+		return new QuickSortPivotSmartOnRandom<String>();
 	}
 
 	@Override
 	protected
 	QuickSort<Long> getQuickSortLong() {
-		return new QuickSortPivotRandom<Long>();
+		return new QuickSortPivotSmartOnRandom<Long>();
 	}
-
 	
+	
+
 }

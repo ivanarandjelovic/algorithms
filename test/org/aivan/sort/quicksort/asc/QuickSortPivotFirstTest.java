@@ -1,6 +1,7 @@
 package org.aivan.sort.quicksort.asc;
 
 import org.aivan.sort.quicksort.QuickSort;
+import org.aivan.sort.quicksort.QuickSortAscendingArrayTest;
 import org.aivan.sort.quicksort.QuickSortPivotIsFirstElement;
 import org.junit.Test;
 
