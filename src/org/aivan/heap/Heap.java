@@ -1,6 +1,8 @@
 package org.aivan.heap;
 
-public abstract class Heap<T extends Comparable<T>>  {
+import org.aivan.sort.Sort;
+
+public abstract class Heap<T extends Comparable<T>> implements Sort<T> {
 
 	protected T[] elements;
 	protected int size = 0;
@@ -8,7 +10,7 @@ public abstract class Heap<T extends Comparable<T>>  {
 
 	public T pop() {
 		if (this.size > 0) {
-			// Minimum element is on the top
+			// Maximum element is on the top
 			T min = elements[0];
 	
 			elements[0] = elements[this.size - 1];
@@ -46,11 +48,23 @@ public abstract class Heap<T extends Comparable<T>>  {
 			tmp *= 2;
 		}
 		// System.out.println("size=" + size + ", levels=" + levels);
-		for (int i = size / 2; i >= 0; i--) {
+		for (int i = size / 2 - 1; i >= 0; i--) {
 			bubbleDown(i);
 		}
 		// System.out.println("Final=" + this.toString());
 	
+	}
+	
+	@Override
+	public void sort(T[] array) {
+		this.buildHeap(array);
+		for (int i = array.length - 1; i > 0; i--) {
+			// Root is biggest element in the remaining heap, take it out and put it
+			// at the end
+			T tmp = pop();
+			array[i] = tmp;
+		}
+		// DONE :) !
 	}
 
 }

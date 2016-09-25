@@ -7,7 +7,7 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class Heap1Test extends SortRandomArraysTest {
+public class Heap4Test extends SortRandomArraysTest {
 
 	@Test
 	public void ___1_reset() {
@@ -18,13 +18,12 @@ public class Heap1Test extends SortRandomArraysTest {
 	@Override
 	protected
 	Sort<String> getSortString() {
-		return new Heap1<String>();
+		return new Heap4<String>();
 	}
 
 	@Override
 	protected
 	Sort<Long> getSortLong() {
-		return new Heap1<Long>();
+		return new Heap4<Long>();
 	}
-
 }

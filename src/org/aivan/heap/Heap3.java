@@ -9,7 +9,7 @@ package org.aivan.heap;
 public class Heap3<T extends Comparable<T>> extends Heap<T> {
 
 	protected void bubbleDown(int i) {
-		int doubleIndex = i * 2;
+		int doubleIndex = i * 2 + 1;
 
 		if (doubleIndex >= this.size) {
 			return;
@@ -17,29 +17,29 @@ public class Heap3<T extends Comparable<T>> extends Heap<T> {
 
 		int doubleIndexAndOne = doubleIndex + 1;
 
-		boolean leftLarger = elements[i].compareTo(elements[doubleIndex]) <= 0;
+		boolean leftSmaller = elements[i].compareTo(elements[doubleIndex]) > 0;
 		boolean doubleIndexAndOneNotExists = doubleIndexAndOne >= this.size;
 		T tmp;
 
-		if (leftLarger) {
-			boolean rightLarger = doubleIndexAndOneNotExists || (elements[i].compareTo(elements[doubleIndexAndOne]) <= 0);
-			if (rightLarger) {
+		if (leftSmaller) {
+			boolean rightSmaller = doubleIndexAndOneNotExists || (elements[i].compareTo(elements[doubleIndexAndOne]) > 0);
+			if (rightSmaller) {
 				return;
-			} else {
+			} else if(!doubleIndexAndOneNotExists) {
 				tmp = elements[i];
 				elements[i] = elements[doubleIndexAndOne];
 				elements[doubleIndexAndOne] = tmp;
 				bubbleDown(doubleIndexAndOne);
 			}
 		} else {
-			if (doubleIndexAndOneNotExists || elements[doubleIndex].compareTo(elements[doubleIndexAndOne]) <= 0) {
-				// left smaller than right (both smaller then parrent)
+			if (doubleIndexAndOneNotExists || elements[doubleIndex].compareTo(elements[doubleIndexAndOne]) > 0) {
+				// left larger than right (both larger then parent)
 				tmp = elements[i];
 				elements[i] = elements[doubleIndex];
 				elements[doubleIndex] = tmp;
 				bubbleDown(doubleIndex);
-			} else {
-				// Right one smaller than left (and surely exists)
+			} else if (!doubleIndexAndOneNotExists){
+				// Right one smaller than left 
 				tmp = elements[i];
 				elements[i] = elements[doubleIndexAndOne];
 				elements[doubleIndexAndOne] = tmp;
