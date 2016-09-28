@@ -41,4 +41,37 @@ public class SimpleTreeTest {
 		Assert.assertEquals(500, stree.getRoot().leftCount);
 		Assert.assertEquals(499, stree.getRoot().rightCount);
 	}
+	
+	@Test
+	public void treeTestDeletion() {
+		SimpleTree<String> stree = new SimpleTree<String>();
+	
+		stree.add("1");
+		stree.add("2");
+		stree.add("2");
+		stree.add("2");
+		stree.add("3");
+		
+		// Now check the tree:
+		List<String> items = stree.getAll();
+		Assert.assertEquals(5, items.size());
+		
+		stree.delete("2");
+		items = stree.getAll();
+		Assert.assertEquals(4, items.size());
+
+		stree.delete("2");
+		stree.delete("2");
+		items = stree.getAll();
+		Assert.assertEquals(2, items.size());
+
+		stree.delete("1");
+		items = stree.getAll();
+		Assert.assertEquals(1, items.size());
+
+		stree.delete("3");
+		items = stree.getAll();
+		Assert.assertEquals(0, items.size());
+	}
+	
 }

@@ -13,15 +13,14 @@ import org.aivan.tree.base.Tree;
  *
  * @param <T>
  */
-public class SimpleTree<T> implements Tree<T> {
+public class SimpleTree<T extends Comparable<T>> implements Tree<T> {
 
 	Node<T> root = null;
 
 	@Override
 	public void add(T element) {
 		if (root == null) {
-			root = new Node<T>();
-			root.value = element;
+			root = createNewNode(null, element);
 		} else {
 			add(root, element);
 		}
@@ -29,20 +28,34 @@ public class SimpleTree<T> implements Tree<T> {
 	}
 
 	private void add(Node<T> node, T element) {
-		if (node.leftCount <= node.rightCount) {
-			addLeft(node, element);
-			node.leftCount++;
+		if (element.compareTo(node.value) == 0) {
+			// These are same elements, so just increase counter:
+			node.count++;
 		} else {
-			addRight(node, element);
-			node.rightCount++;
+			if (shouldWeAddNewElementToTheLeft(node, element)) {
+				addLeft(node, element);
+				node.leftCount++;
+			} else {
+				addRight(node, element);
+				node.rightCount++;
+			}
 		}
+	}
+
+	/**
+	 * Override this method to define where new method goes
+	 * 
+	 * @param node
+	 * @param element
+	 * @return
+	 */
+	protected boolean shouldWeAddNewElementToTheLeft(Node<T> node, T element) {
+		return node.leftCount <= node.rightCount;
 	}
 
 	private void addLeft(Node<T> parent, T element) {
 		if (parent.left == null) {
-			Node<T> node = new Node<T>();
-			node.value = element;
-			node.parent = parent;
+			Node<T> node = createNewNode(parent, element);
 			parent.left = node;
 		} else {
 			add(parent.left, element);
@@ -51,13 +64,19 @@ public class SimpleTree<T> implements Tree<T> {
 
 	private void addRight(Node<T> parent, T element) {
 		if (parent.right == null) {
-			Node<T> node = new Node<T>();
-			node.value = element;
-			node.parent = parent;
+			Node<T> node = createNewNode(parent, element);
 			parent.right = node;
 		} else {
 			add(parent.right, element);
 		}
+	}
+
+	private Node<T> createNewNode(Node<T> parent, T element) {
+		Node<T> node = new Node<T>();
+		node.value = element;
+		node.count++;
+		node.parent = parent;
+		return node;
 	}
 
 	@Override
@@ -72,6 +91,12 @@ public class SimpleTree<T> implements Tree<T> {
 		}
 		if (node.value.equals(element)) {
 			// we found it in current node, now delete it:
+			if (node.count > 1) {
+				// This is node with multiple values, simply decrement the counter:
+				node.count--;
+				// And we are done :)
+				return true;
+			}
 			if (node.left == null && node.right == null) {
 				// no childrent, simply kill this node
 				if (node.parent != null) {
@@ -89,17 +114,29 @@ public class SimpleTree<T> implements Tree<T> {
 				}
 			} else if (node.left != null) {
 				// replace this node with left child:
-				if (node.parent.left == node) {
-					node.parent.left = node.left;
+				if (node.parent != null) {
+					if (node.parent.left == node) {
+						node.parent.left = node.left;
+					} else {
+						node.parent.right = node.left;
+					}
 				} else {
-					node.parent.right = node.left;
+					// This was root:
+					root = node.left;
+					root.parent = null;
 				}
 			} else {
 				// replace this node with right child:
-				if (node.parent.left == node) {
-					node.parent.left = node.right;
+				if (node.parent != null) {
+					if (node.parent.left == node) {
+						node.parent.left = node.right;
+					} else {
+						node.parent.right = node.right;
+					}
 				} else {
-					node.parent.right = node.right;
+					// This was root:
+					root = node.right;
+					root.parent = null;
 				}
 			}
 			return true;
@@ -131,13 +168,15 @@ public class SimpleTree<T> implements Tree<T> {
 	private void traverseInOrder(Node<T> node, List<T> result) {
 		if (node != null) {
 			traverseInOrder(node.left, result);
-			result.add(node.value);
+			for (int i = 0; i < node.count; i++) {
+				result.add(node.value);
+			}
 			traverseInOrder(node.right, result);
 		} else {
 			return;
 		}
 	}
-	
+
 	public Node<T> getRoot() {
 		return root;
 	}
