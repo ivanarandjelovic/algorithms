@@ -22,4 +22,8 @@ public class Node<T> {
 	public int leftCount = 0;
 	public int rightCount = 0;
 	
+	/**
+	 * Node's level
+	 */
+	public int level = 0;
 }

@@ -97,6 +97,9 @@ public class SimpleTree<T extends Comparable<T>> implements Tree<T> {
 		node.value = element;
 		node.count = elementCount;
 		node.parent = parent;
+		if (parent != null) {
+			node.level = parent.level + 1;
+		}
 		return node;
 	}
 
@@ -146,6 +149,8 @@ public class SimpleTree<T extends Comparable<T>> implements Tree<T> {
 					root = node.left;
 					root.parent = null;
 				}
+				// Update Node levels
+				decrementLevels(node.left);
 			} else {
 				// replace this node with right child:
 				if (node.parent != null) {
@@ -159,6 +164,8 @@ public class SimpleTree<T extends Comparable<T>> implements Tree<T> {
 					root = node.right;
 					root.parent = null;
 				}
+				// Update Node levels
+				decrementLevels(node.right);
 			}
 			return true;
 		} else {
@@ -177,6 +184,14 @@ public class SimpleTree<T extends Comparable<T>> implements Tree<T> {
 			}
 		}
 
+	}
+
+	protected void decrementLevels(Node<T> node) {
+		if (node != null) {
+			node.level--;
+			decrementLevels(node.left);
+			decrementLevels(node.right);
+		}
 	}
 
 	@Override
@@ -200,6 +215,20 @@ public class SimpleTree<T extends Comparable<T>> implements Tree<T> {
 
 	public Node<T> getRoot() {
 		return root;
+	}
+
+	public void print() {
+		print(root);
+	}
+
+	private void print(Node<T> node) {
+		if (node != null) {
+			System.out.println("l:" + node.level + ", v:" + node.value + ", c:" + node.count + ", lc:" + node.leftCount
+			    + ", rc:" + node.rightCount);
+			print(node.left);
+			print(node.right);
+		}
+
 	}
 
 }
