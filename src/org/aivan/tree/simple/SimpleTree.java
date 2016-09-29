@@ -15,31 +15,50 @@ import org.aivan.tree.base.Tree;
  */
 public class SimpleTree<T extends Comparable<T>> implements Tree<T> {
 
-	Node<T> root = null;
+	protected Node<T> root = null;
 
 	@Override
 	public void add(T element) {
 		if (root == null) {
-			root = createNewNode(null, element);
+			root = createNewNode(null, element, 1);
 		} else {
 			add(root, element);
 		}
 
 	}
 
-	private void add(Node<T> node, T element) {
+	protected void add(Node<T> node, T element) {
+		add(node, element, 1);
+	}
+
+	/**
+	 * returun value tells us if the node was really added or existing node's
+	 * count was only incremented.
+	 * 
+	 * @param node
+	 * @param element
+	 * @param elementCount
+	 * @return
+	 */
+	protected boolean add(Node<T> node, T element, int elementCount) {
+		boolean result = false;
 		if (element.compareTo(node.value) == 0) {
 			// These are same elements, so just increase counter:
-			node.count++;
+			node.count += elementCount;
 		} else {
 			if (shouldWeAddNewElementToTheLeft(node, element)) {
-				addLeft(node, element);
-				node.leftCount++;
+				result = addLeft(node, element, elementCount);
+				if (result) {
+					node.leftCount++;
+				}
 			} else {
-				addRight(node, element);
-				node.rightCount++;
+				result = addRight(node, element, elementCount);
+				if (result) {
+					node.rightCount++;
+				}
 			}
 		}
+		return result;
 	}
 
 	/**
@@ -53,28 +72,30 @@ public class SimpleTree<T extends Comparable<T>> implements Tree<T> {
 		return node.leftCount <= node.rightCount;
 	}
 
-	private void addLeft(Node<T> parent, T element) {
+	private boolean addLeft(Node<T> parent, T element, int elementCount) {
 		if (parent.left == null) {
-			Node<T> node = createNewNode(parent, element);
+			Node<T> node = createNewNode(parent, element, elementCount);
 			parent.left = node;
+			return true;
 		} else {
-			add(parent.left, element);
+			return add(parent.left, element, elementCount);
 		}
 	}
 
-	private void addRight(Node<T> parent, T element) {
+	private boolean addRight(Node<T> parent, T element, int elementCount) {
 		if (parent.right == null) {
-			Node<T> node = createNewNode(parent, element);
+			Node<T> node = createNewNode(parent, element, elementCount);
 			parent.right = node;
+			return true;
 		} else {
-			add(parent.right, element);
+			return add(parent.right, element, elementCount);
 		}
 	}
 
-	private Node<T> createNewNode(Node<T> parent, T element) {
+	private Node<T> createNewNode(Node<T> parent, T element, int elementCount) {
 		Node<T> node = new Node<T>();
 		node.value = element;
-		node.count++;
+		node.count = elementCount;
 		node.parent = parent;
 		return node;
 	}
@@ -84,7 +105,7 @@ public class SimpleTree<T extends Comparable<T>> implements Tree<T> {
 		return delete(root, element);
 	}
 
-	private boolean delete(Node<T> node, T element) {
+	protected boolean delete(Node<T> node, T element) {
 		if (node == null) {
 			// Nothing to delete here, we hit the leaf
 			return false;
