@@ -359,6 +359,8 @@ public class BalancedTreeUnitTest {
 
 		Assert.assertEquals(7, btree.getAll().size());
 		Assert.assertTrue(Arrays.equals(new String[] { "AAA", "BBB", "CCC", "DDD", "EEE", "FFF", "GGG" }, btree.getAll().toArray(new String[] {})));
+		
+		Assert.assertEquals(2, btree.getMaxHeight());
 	}
 
 	@Test

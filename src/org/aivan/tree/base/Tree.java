@@ -23,5 +23,7 @@ public interface Tree<T> {
 	 * @return
 	 */
 	public List<T> getAll();
+
+	int getMaxHeight();
 	
 }

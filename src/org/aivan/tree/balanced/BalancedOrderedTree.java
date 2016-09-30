@@ -7,28 +7,24 @@ import org.apache.logging.log4j.Logger;
 
 public class BalancedOrderedTree<T extends Comparable<T>> extends OrderedTree<T> {
 
+	private static final int MIN_COUNT_DIFF_FOR_DEBALANCE = 3;
+
 	public static final Logger log = LogManager.getLogger(BalancedOrderedTree.class);
 
 	/**
-	 * How mich percentage of difference we allow between two branches
+	 * How much percentage of difference we allow between two branches
 	 */
-	private static final float DEBALANCE_LIMIT_IN_PERCENT = 10;
-
-	// @Override
-	// protected void add(Node<T> node, T element) {
-	// // TODO Auto-generated method stub
-	// super.add(node, element);
-	// // Now, does current node requires re-balancing?
-	// checkNodeBalance(node);
-	// }
+	private static final float DEBALANCE_LIMIT_IN_PERCENT = 85;
 
 	@Override
 	protected boolean add(Node<T> node, T element, int elementCount) {
+	
 		// TODO Auto-generated method stub
 		boolean result = super.add(node, element, elementCount);
 		if(result) {
 			checkNodeBalance(node);
 		}
+		
 		return result;
 	}
 
@@ -48,7 +44,7 @@ public class BalancedOrderedTree<T extends Comparable<T>> extends OrderedTree<T>
 //		log.debug("Imbalance check, node: " + node.value + ", level: " + node.level + ", leftCount = " + node.leftCount
 //		    + ", rightCount = " + node.rightCount);
 
-		if (node.leftCount != 0 && (node.leftCount - node.rightCount) >= 2
+		if (node.leftCount != 0 && (node.leftCount - node.rightCount) >= MIN_COUNT_DIFF_FOR_DEBALANCE
 		    && (node.rightCount * 100.0f) / node.leftCount < (100 - DEBALANCE_LIMIT_IN_PERCENT)) {
 			// So, there are left nodes, there are at least two more then on the right
 			// side and the
@@ -63,7 +59,7 @@ public class BalancedOrderedTree<T extends Comparable<T>> extends OrderedTree<T>
 //			log.debug("Imbalance corrected, node: " + node.value + ", leftCount = " + node.leftCount + ", rightCount = "
 //			    + node.rightCount);
 
-		} else if (node.rightCount != 0 && (node.rightCount - node.leftCount) >= 2
+		} else if (node.rightCount != 0 && (node.rightCount - node.leftCount) >= MIN_COUNT_DIFF_FOR_DEBALANCE
 		    && (node.leftCount * 100.0f) / node.rightCount < (100 - DEBALANCE_LIMIT_IN_PERCENT)) {
 			// Right tree is "heavier" (see previous branch for detailed explanation)
 

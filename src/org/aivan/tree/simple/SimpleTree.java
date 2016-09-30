@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.aivan.tree.base.Node;
 import org.aivan.tree.base.Tree;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Simple unordered tree of any elements
@@ -15,16 +17,25 @@ import org.aivan.tree.base.Tree;
  */
 public class SimpleTree<T extends Comparable<T>> implements Tree<T> {
 
+	public static final Logger log = LogManager.getLogger(SimpleTree.class);
+	
 	protected Node<T> root = null;
 
+	int counter = 0;
+	
 	@Override
 	public void add(T element) {
+		counter++;
 		if (root == null) {
 			root = createNewNode(null, element, 1);
 		} else {
 			add(root, element);
 		}
 
+//		if(counter % 1000 == 0) {
+//			log.debug("added "+counter+" elements into the tree");
+//		}
+		
 	}
 
 	protected void add(Node<T> node, T element) {
@@ -105,7 +116,11 @@ public class SimpleTree<T extends Comparable<T>> implements Tree<T> {
 
 	@Override
 	public boolean delete(T element) {
-		return delete(root, element);
+		boolean result = delete(root,element);
+		if(result) {
+			counter--;
+		}
+		return result;
 	}
 
 	protected boolean delete(Node<T> node, T element) {
@@ -196,8 +211,11 @@ public class SimpleTree<T extends Comparable<T>> implements Tree<T> {
 
 	@Override
 	public List<T> getAll() {
+//		log.debug("start");
 		List<T> result = new LinkedList<T>();
 		traverseInOrder(root, result);
+//		log.debug("end");
+//		log.debug("root node balance: "+root.leftCount+"/"+root.rightCount);
 		return result;
 	}
 
@@ -229,6 +247,20 @@ public class SimpleTree<T extends Comparable<T>> implements Tree<T> {
 			print(node.right);
 		}
 
+	}
+	
+	@Override
+	public int getMaxHeight() {
+		return getMaxHeight(root);
+	}
+
+	private int getMaxHeight(Node<T> node) {
+		if(node!=null) {
+			int leftLevel = getMaxHeight(node.left);
+			int rightLevel = getMaxHeight(node.right);
+			return Math.max(Math.max(leftLevel, rightLevel), node.level);
+		}
+		return 0;
 	}
 	
 	

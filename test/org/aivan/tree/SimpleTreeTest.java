@@ -2,6 +2,7 @@ package org.aivan.tree;
 
 import java.util.List;
 
+import org.aivan.tree.base.Tree;
 import org.aivan.tree.simple.SimpleTree;
 import org.junit.Assert;
 import org.junit.Test;
@@ -44,7 +45,7 @@ public class SimpleTreeTest {
 	
 	@Test
 	public void treeTestDeletion() {
-		SimpleTree<String> stree = new SimpleTree<String>();
+		Tree<String> stree = new SimpleTree<String>();
 	
 		stree.add("1");
 		stree.add("2");

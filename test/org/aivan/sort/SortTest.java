@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import org.aivan.TimedTest;
 import org.aivan.sort.Sort;
+import org.aivan.tree.base.Tree;
 import org.apache.commons.lang3.time.StopWatch;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,7 +21,6 @@ public abstract class SortTest extends TimedTest {
 	StopWatch sw1 = new StopWatch();
 	StopWatch sw2 = new StopWatch();
 
-
 	public void resetTimers() {
 		sw1 = new StopWatch();
 		sw2 = new StopWatch();
@@ -31,15 +31,15 @@ public abstract class SortTest extends TimedTest {
 		sortOneArray(SMALL_ARRAY_SIZE);
 		sortOneArray(MEDIUM_ARRAY_SIZE);
 		sortOneArray(LARGE_ARRAY_SIZE);
-		//sortOneArray(HUGE_ARRAY_SIZE);
+		// sortOneArray(HUGE_ARRAY_SIZE);
 	}
-	
+
 	@Test
 	public void a2_longSort() throws Exception {
 		sortOneLongArray(SMALL_ARRAY_SIZE);
 		sortOneLongArray(MEDIUM_ARRAY_SIZE);
 		sortOneLongArray(LARGE_ARRAY_SIZE);
-		//sortOneArray(HUGE_ARRAY_SIZE);
+		// sortOneArray(HUGE_ARRAY_SIZE);
 	}
 
 	private void sortOneArray(int arraySize) throws Exception {
@@ -48,38 +48,33 @@ public abstract class SortTest extends TimedTest {
 
 		String[] systemSorted = systemSort(arr);
 
-		Sort<String> qsort = getSortString();
+		Sort<String> sort = getSortString();
 		sw2.start();
-		qsort.sort(arr);
+		sort.sort(arr);
 		sw2.stop();
 		log.debug("Custom sorted time for " + arraySize + " elements: " + sw2.getTime());
-
 		acumulatedDiff += (sw2.getTime() - sw1.getTime());
 		Assert.assertTrue(Arrays.equals(systemSorted, arr));
 	}
 
 	protected abstract String[] generateStringArray(int arraySize) throws Exception;
 
-
 	protected abstract Long[] generateLongArray(int arraySize);
-	
-	
+
 	private void sortOneLongArray(int arraySize) throws Exception {
 		resetTimers();
 		Long[] arr = generateLongArray(arraySize);
 
 		Long[] systemSorted = systemSort(arr);
 
-	  Sort<Long> qsort = getSortLong();
+		Sort<Long> sort = getSortLong();
 		sw2.start();
-		qsort.sort(arr);
+		sort.sort(arr);
 		sw2.stop();
 		log.debug("Custom sorted time for " + arraySize + " elements: " + sw2.getTime());
-
 		acumulatedDiff += (sw2.getTime() - sw1.getTime());
 		Assert.assertTrue(Arrays.equals(systemSorted, arr));
 	}
-
 
 	private String[] systemSort(String[] arr) {
 		String[] systemSorted = Arrays.copyOf(arr, arr.length);
@@ -93,7 +88,7 @@ public abstract class SortTest extends TimedTest {
 
 		return systemSorted;
 	}
-	
+
 	private Long[] systemSort(Long[] arr) {
 		Long[] systemSorted = Arrays.copyOf(arr, arr.length);
 
@@ -108,8 +103,7 @@ public abstract class SortTest extends TimedTest {
 	}
 
 	protected abstract Sort<String> getSortString();
+
 	protected abstract Sort<Long> getSortLong();
-
-
 
 }
