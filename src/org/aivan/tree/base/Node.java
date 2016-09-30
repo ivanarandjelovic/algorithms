@@ -9,21 +9,28 @@ package org.aivan.tree.base;
  */
 public class Node<T> {
 	public T value = null;
-	
+
 	/**
 	 * If the value is inserted many times here we keep count of them
 	 */
 	public int count = 0;
-	
+
 	public Node<T> parent;
 	public Node<T> left;
 	public Node<T> right;
 
 	public int leftCount = 0;
 	public int rightCount = 0;
-	
+
 	/**
 	 * Node's level
 	 */
 	public int level = 0;
+
+	@Override
+	public String toString() {
+		return String.format("Val: %s, Cnt: %d, Lvl: %d, lCount: %d, rCount: %d", value, count, level, leftCount,
+		    rightCount);
+	}
+
 }

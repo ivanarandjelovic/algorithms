@@ -230,5 +230,7 @@ public class SimpleTree<T extends Comparable<T>> implements Tree<T> {
 		}
 
 	}
+	
+	
 
 }
