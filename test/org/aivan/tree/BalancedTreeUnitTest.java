@@ -151,6 +151,84 @@ public class BalancedTreeUnitTest {
 		Assert.assertTrue(Arrays.equals(new String[] { "AAA", "BBB", "CCC" }, btree.getAll().toArray(new String[] {})));
 	}
 	
+	@Test
+	public void testBalanceFromLeft2() {
+		BalancedOrderedTree<String> btree = new BalancedOrderedTree<String>();
+
+		btree.add("CCC");
+		btree.add("AAA");
+		btree.add("BBB");
+
+		Node<String> root = btree.getRoot();
+		validateNode(null, root, "BBB", 1, 0, 1, null, 1, null);
+
+		// Check left child node
+		Node<String> child = root.left;
+		validateNode(root, child, "AAA", 1, 1, 0, null, 0, null);
+
+		// Check right child node
+		child = root.right;
+		validateNode(root, child, "CCC", 1, 1, 0, null, 0, null);
+
+		Assert.assertEquals(3, btree.getAll().size());
+		Assert.assertTrue(Arrays.equals(new String[] { "AAA", "BBB", "CCC" }, btree.getAll().toArray(new String[] {})));
+	}
+	
+	@Test
+	public void testBalanceFromRight2() {
+		BalancedOrderedTree<String> btree = new BalancedOrderedTree<String>();
+
+		btree.add("AAA");
+		btree.add("CCC");
+		btree.add("BBB");
+
+		Node<String> root = btree.getRoot();
+		validateNode(null, root, "BBB", 1, 0, 1, null, 1, null);
+
+		// Check left child node
+		Node<String> child = root.left;
+		validateNode(root, child, "AAA", 1, 1, 0, null, 0, null);
+
+		// Check right child node
+		child = root.right;
+		validateNode(root, child, "CCC", 1, 1, 0, null, 0, null);
+
+		Assert.assertEquals(3, btree.getAll().size());
+		Assert.assertTrue(Arrays.equals(new String[] { "AAA", "BBB", "CCC" }, btree.getAll().toArray(new String[] {})));
+	}
+	
+	@Test
+	public void testBalanceFromLeft3() {
+		BalancedOrderedTree<String> btree = new BalancedOrderedTree<String>();
+
+		btree.add("DDD");
+		btree.add("AAA");
+		btree.add("EEE");
+		btree.add("BBB");
+		btree.add("CCC");
+
+		Node<String> root = btree.getRoot();
+		validateNode(null, root, "CCC", 1, 0, 2, null, 2, null);
+
+		// Check left child node
+		Node<String> Achild = root.left;
+		validateNode(root, Achild, "AAA", 1, 1, 0, null, 1, null);
+
+		Node<String> Bchild = Achild.right;
+		validateNode(Achild, Bchild, "BBB", 1, 2, 0, null, 0, null);
+
+		// Check right child node
+		Node<String> Echild = root.right;
+		validateNode(root, Echild, "EEE", 1, 1, 1, null, 0, null);
+
+		Node<String> Dchild = Echild.left;
+		validateNode(Echild, Dchild, "DDD", 1, 2, 0, null, 0, null);
+
+		Assert.assertEquals(5, btree.getAll().size());
+		Assert.assertTrue(Arrays.equals(new String[] { "AAA", "BBB", "CCC", "DDD", "EEE" }, btree.getAll().toArray(new String[] {})));
+	}
+	
+
 	/**
 	 * Helper method for validating nodes
 	 * 
