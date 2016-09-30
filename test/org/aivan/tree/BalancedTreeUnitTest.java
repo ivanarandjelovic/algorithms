@@ -290,6 +290,77 @@ public class BalancedTreeUnitTest {
 		Assert.assertTrue(Arrays.equals(new String[] { "AAA", "BBB", "CCC", "DDD", "EEE" }, btree.getAll().toArray(new String[] {})));
 	}
 	
+	@Test
+	public void testBalanceFromRight4() {
+		BalancedOrderedTree<String> btree = new BalancedOrderedTree<String>();
+
+		btree.add("BBB");
+		btree.add("AAA");
+		btree.add("EEE");
+		btree.add("CCC");
+		btree.add("DDD");
+
+		Node<String> root = btree.getRoot();
+		validateNode(null, root, "CCC", 1, 0, 2, null, 2, null);
+
+		// Check left child node
+		Node<String> Achild = root.left;
+		validateNode(root, Achild, "AAA", 1, 1, 0, null, 1, null);
+
+		Node<String> Bchild = Achild.right;
+		validateNode(Achild, Bchild, "BBB", 1, 2, 0, null, 0, null);
+
+		// Check right child node
+		Node<String> Echild = root.right;
+		validateNode(root, Echild, "EEE", 1, 1, 1, null, 0, null);
+
+		Node<String> Dchild = Echild.left;
+		validateNode(Echild, Dchild, "DDD", 1, 2, 0, null, 0, null);
+
+		Assert.assertEquals(5, btree.getAll().size());
+		Assert.assertTrue(Arrays.equals(new String[] { "AAA", "BBB", "CCC", "DDD", "EEE" }, btree.getAll().toArray(new String[] {})));
+	}
+
+	@Test
+	public void testBalanceFromRight5() {
+		BalancedOrderedTree<String> btree = new BalancedOrderedTree<String>();
+
+		btree.add("CCC");
+		btree.add("BBB");
+		btree.add("EEE");
+		btree.add("AAA");
+		btree.add("DDD");
+		btree.add("FFF");
+		btree.add("GGG");
+
+		Node<String> root = btree.getRoot();
+		validateNode(null, root, "DDD", 1, 0, 3, null, 3, null);
+
+		// Check left child node
+		Node<String> L1child = root.left;
+		validateNode(root, L1child, "BBB", 1, 1, 1, null, 1, null);
+
+		Node<String> L2child = L1child.left;
+		validateNode(L1child, L2child, "AAA", 1, 2, 0, null, 0, null);
+
+		Node<String> R2child = L1child.right;
+		validateNode(L1child, R2child, "CCC", 1, 2, 0, null, 0, null);
+
+		// Check right child node
+		Node<String> Rchild = root.right;
+		validateNode(root, Rchild, "FFF", 1, 1, 1, null, 1, null);
+
+		L2child = Rchild.left;
+		validateNode(Rchild, L2child, "EEE", 1, 2, 0, null, 0, null);
+
+		R2child = Rchild.right;
+		validateNode(Rchild, R2child, "GGG", 1, 2, 0, null, 0, null);
+
+
+		Assert.assertEquals(7, btree.getAll().size());
+		Assert.assertTrue(Arrays.equals(new String[] { "AAA", "BBB", "CCC", "DDD", "EEE", "FFF", "GGG" }, btree.getAll().toArray(new String[] {})));
+	}
+
 
 	/**
 	 * Helper method for validating nodes
