@@ -18,11 +18,11 @@ import org.apache.logging.log4j.Logger;
 public class SimpleTree<T extends Comparable<T>> implements Tree<T> {
 
 	public static final Logger log = LogManager.getLogger(SimpleTree.class);
-	
+
 	protected Node<T> root = null;
 
 	int counter = 0;
-	
+
 	@Override
 	public void add(T element) {
 		counter++;
@@ -32,10 +32,10 @@ public class SimpleTree<T extends Comparable<T>> implements Tree<T> {
 			add(root, element);
 		}
 
-//		if(counter % 1000 == 0) {
-//			log.debug("added "+counter+" elements into the tree");
-//		}
-		
+		// if(counter % 1000 == 0) {
+		// log.debug("added "+counter+" elements into the tree");
+		// }
+
 	}
 
 	protected void add(Node<T> node, T element) {
@@ -61,12 +61,17 @@ public class SimpleTree<T extends Comparable<T>> implements Tree<T> {
 				result = addLeft(node, element, elementCount);
 				if (result) {
 					node.leftCount++;
+//					node.height = Math.max(node.height, node.left.height + 1);
 				}
 			} else {
 				result = addRight(node, element, elementCount);
 				if (result) {
 					node.rightCount++;
+//					node.height = Math.max(node.height, node.right.height + 1);
 				}
+			}
+			if(result) {
+				updateHeight(node);
 			}
 		}
 		return result;
@@ -116,8 +121,8 @@ public class SimpleTree<T extends Comparable<T>> implements Tree<T> {
 
 	@Override
 	public boolean delete(T element) {
-		boolean result = delete(root,element);
-		if(result) {
+		boolean result = delete(root, element);
+		if (result) {
 			counter--;
 		}
 		return result;
@@ -159,6 +164,7 @@ public class SimpleTree<T extends Comparable<T>> implements Tree<T> {
 					} else {
 						node.parent.right = node.left;
 					}
+					node.left.parent = node.parent;
 				} else {
 					// This was root:
 					root = node.left;
@@ -166,6 +172,7 @@ public class SimpleTree<T extends Comparable<T>> implements Tree<T> {
 				}
 				// Update Node levels
 				decrementLevels(node.left);
+				//updateHeight(node.left);
 			} else {
 				// replace this node with right child:
 				if (node.parent != null) {
@@ -174,6 +181,7 @@ public class SimpleTree<T extends Comparable<T>> implements Tree<T> {
 					} else {
 						node.parent.right = node.right;
 					}
+					node.right.parent = node.parent;
 				} else {
 					// This was root:
 					root = node.right;
@@ -181,22 +189,49 @@ public class SimpleTree<T extends Comparable<T>> implements Tree<T> {
 				}
 				// Update Node levels
 				decrementLevels(node.right);
+				//updateHeight(node.right);
 			}
 			return true;
 		} else {
 			// Must be in one of the children:
 			boolean deletedLeft = delete(node.left, element);
+			boolean deletedRight = false;
+			boolean result = false;
 			if (!deletedLeft) {
-				boolean deletedRight = delete(node.right, element);
+				deletedRight = delete(node.right, element);
 				if (deletedRight) {
 					node.rightCount--;
-					return true;
+					result = true;
+				} else {
+					result = false;
 				}
-				return false;
 			} else {
 				node.leftCount--;
-				return true;
+				result = true;
 			}
+			if (result) {
+				updateHeight(node);
+			}
+			return result;
+
+		}
+
+	}
+
+	private void updateHeight(Node<T> node) {
+		if (node == null) {
+			return;
+		}
+		if (node.left != null) {
+			if (node.right != null) {
+				node.height = Math.max(node.left.height + 1, node.right.height + 1);
+			} else {
+				node.height = node.left.height + 1;
+			}
+		} else if (node.right != null) {
+			node.height = node.right.height + 1;
+		} else {
+			node.height = 0;
 		}
 
 	}
@@ -211,11 +246,11 @@ public class SimpleTree<T extends Comparable<T>> implements Tree<T> {
 
 	@Override
 	public List<T> getAll() {
-//		log.debug("start");
+		// log.debug("start");
 		List<T> result = new LinkedList<T>();
 		traverseInOrder(root, result);
-//		log.debug("end");
-//		log.debug("root node balance: "+root.leftCount+"/"+root.rightCount);
+		// log.debug("end");
+		// log.debug("root node balance: "+root.leftCount+"/"+root.rightCount);
 		return result;
 	}
 
@@ -236,33 +271,25 @@ public class SimpleTree<T extends Comparable<T>> implements Tree<T> {
 	}
 
 	public void print() {
+		System.out.println("Tree element count: "+counter);
 		print(root);
 	}
 
 	private void print(Node<T> node) {
 		if (node != null) {
-			System.out.println("l:" + node.level + ", v:" + node.value + ", c:" + node.count + ", lc:" + node.leftCount
-			    + ", rc:" + node.rightCount);
+			System.out.println(node);
 			print(node.left);
 			print(node.right);
 		}
 
 	}
-	
+
 	@Override
 	public int getMaxHeight() {
-		return getMaxHeight(root);
-	}
-
-	private int getMaxHeight(Node<T> node) {
-		if(node!=null) {
-			int leftLevel = getMaxHeight(node.left);
-			int rightLevel = getMaxHeight(node.right);
-			return Math.max(Math.max(leftLevel, rightLevel), node.level);
+		if (root != null) {
+			return root.height;
 		}
 		return 0;
 	}
-	
-	
 
 }

@@ -27,10 +27,16 @@ public class Node<T> {
 	 */
 	public int level = 0;
 
+	/**
+	 * Maximum height of the tree including this node (0 - no children, only this
+	 * node)
+	 */
+	public int height = 0;
+
 	@Override
 	public String toString() {
-		return String.format("Val: %s, Cnt: %d, Lvl: %d, lCount: %d, rCount: %d", value, count, level, leftCount,
-		    rightCount);
+		return String.format("Prn: %s, Val: %s, Cnt: %d, Lvl: %d, Hih: %d, lCount: %d, rCount: %d",
+		    (this.parent != null ? parent.value : "nil"), value, count, level, height, leftCount, rightCount);
 	}
 
 }
