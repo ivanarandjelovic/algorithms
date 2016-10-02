@@ -9,23 +9,20 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * Simple unordered tree of any elements, keeping the node's "level"
+ * Simple unordered tree of any elements, keeping the node's "height" (but not the level and node counts)
  * 
  * @author aivan
  *
  * @param <T>
  */
-public class SimpleTree<T extends Comparable<T>> implements Tree<T> {
+public class SimpleHeightTree<T extends Comparable<T>> implements Tree<T> {
 
-	public static final Logger log = LogManager.getLogger(SimpleTree.class);
+	public static final Logger log = LogManager.getLogger(SimpleHeightTree.class);
 
 	protected Node<T> root = null;
 
-	int counter = 0;
-
 	@Override
 	public void add(T element) {
-		counter++;
 		if (root == null) {
 			root = createNewNode(null, element, 1);
 		} else {
@@ -59,16 +56,8 @@ public class SimpleTree<T extends Comparable<T>> implements Tree<T> {
 		} else {
 			if (shouldWeAddNewElementToTheLeft(node, element)) {
 				result = addLeft(node, element, elementCount);
-				if (result) {
-					node.leftCount++;
-					// node.height = Math.max(node.height, node.left.height + 1);
-				}
 			} else {
 				result = addRight(node, element, elementCount);
-				if (result) {
-					node.rightCount++;
-					// node.height = Math.max(node.height, node.right.height + 1);
-				}
 			}
 			if (result) {
 				updateHeight(node);
@@ -111,20 +100,13 @@ public class SimpleTree<T extends Comparable<T>> implements Tree<T> {
 	private Node<T> createNewNode(Node<T> parent, T element, int elementCount) {
 		Node<T> node = new Node<T>();
 		node.value = element;
-		node.count = elementCount;
 		node.parent = parent;
-		if (parent != null) {
-			node.level = parent.level + 1;
-		}
 		return node;
 	}
 
 	@Override
 	public boolean delete(T element) {
 		boolean result = delete(root, element);
-		if (result) {
-			counter--;
-		}
 		return result;
 	}
 
@@ -170,9 +152,6 @@ public class SimpleTree<T extends Comparable<T>> implements Tree<T> {
 					root = node.left;
 					root.parent = null;
 				}
-				// Update Node levels
-				decrementLevels(node.left);
-				// updateHeight(node.left);
 			} else {
 				// replace this node with right child:
 				if (node.parent != null) {
@@ -187,9 +166,6 @@ public class SimpleTree<T extends Comparable<T>> implements Tree<T> {
 					root = node.right;
 					root.parent = null;
 				}
-				// Update Node levels
-				decrementLevels(node.right);
-				// updateHeight(node.right);
 			}
 			return true;
 		} else {
@@ -199,16 +175,10 @@ public class SimpleTree<T extends Comparable<T>> implements Tree<T> {
 			boolean result = false;
 			if (!deletedLeft) {
 				deletedRight = delete(node.right, element);
-				if (deletedRight) {
-					node.rightCount--;
-					result = true;
-				} else {
-					result = false;
-				}
 			} else {
-				node.leftCount--;
 				result = true;
 			}
+			result = deletedLeft || deletedRight;
 			if (result) {
 				updateHeight(node);
 			}
@@ -234,14 +204,6 @@ public class SimpleTree<T extends Comparable<T>> implements Tree<T> {
 			node.height = 1;
 		}
 
-	}
-
-	protected void decrementLevels(Node<T> node) {
-		if (node != null) {
-			node.level--;
-			decrementLevels(node.left);
-			decrementLevels(node.right);
-		}
 	}
 
 	@Override
@@ -271,7 +233,7 @@ public class SimpleTree<T extends Comparable<T>> implements Tree<T> {
 	}
 
 	public void print() {
-		System.out.println("Tree element count: " + counter + ", height: " + (root != null ? root.height : 0));
+		System.out.println("Height: " + (root != null ? root.height : 0));
 		print(root);
 	}
 

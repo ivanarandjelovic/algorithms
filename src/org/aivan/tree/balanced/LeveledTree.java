@@ -1,9 +1,10 @@
 package org.aivan.tree.balanced;
 
 import org.aivan.tree.base.Node;
+import org.aivan.tree.simple.OrderedHeightTree;
 import org.aivan.tree.simple.OrderedTree;
 
-public class LeveledTree<T extends Comparable<T>> extends OrderedTree<T> {
+public class LeveledTree<T extends Comparable<T>> extends OrderedHeightTree<T> {
 
 	/**
 	 * What is the maximum allowed height difference between two sub-trees. "2"
@@ -33,7 +34,8 @@ public class LeveledTree<T extends Comparable<T>> extends OrderedTree<T> {
 	}
 
 	private int checkNodeBalance(Node<T> node) {
-		if (node != null) {
+//		if (node != null) {
+		
 			int leftHeight = (node.left != null ? node.left.height : 0);
 			int rightHeight = (node.right != null ? node.right.height : 0);
 			int heightDifference = leftHeight - rightHeight;
@@ -42,8 +44,8 @@ public class LeveledTree<T extends Comparable<T>> extends OrderedTree<T> {
 			} else {
 				return 0;
 			}
-		}
-		return 0;
+//		}
+//		return 0;
 	}
 
 	private void rebalanceRightToLeft(Node<T> node) {
@@ -70,9 +72,6 @@ public class LeveledTree<T extends Comparable<T>> extends OrderedTree<T> {
 		if (leftBranch != null) {
 			leftBranch.parent = node;
 		}
-
-		// Re-calc levels:
-		updateLevels(newRoot);
 
 		// update height:
 		updateHeight(node);
@@ -109,9 +108,6 @@ public class LeveledTree<T extends Comparable<T>> extends OrderedTree<T> {
 			rightBranch.parent = node;
 		}
 
-		// Re-calc levels:
-		updateLevels(newRoot);
-
 		// update height:
 		updateHeight(node);
 		updateHeight(newRoot);
@@ -119,18 +115,6 @@ public class LeveledTree<T extends Comparable<T>> extends OrderedTree<T> {
 		// What about node count?
 		node.leftCount -= (newRoot.leftCount + 1);
 		newRoot.rightCount += (node.rightCount + 1);
-	}
-
-	private void updateLevels(Node<T> node) {
-		if (node != null) {
-			if (node.parent != null) {
-				node.level = node.parent.level + 1;
-			} else {
-				node.level = 0;
-			}
-			updateLevels(node.left);
-			updateLevels(node.right);
-		}
 	}
 
 }

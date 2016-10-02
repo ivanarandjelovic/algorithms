@@ -2,9 +2,7 @@ package org.aivan.sort.tree.random;
 
 import org.aivan.sort.Sort;
 import org.aivan.sort.SortRandomArraysTest;
-import org.aivan.sort.tree.BalancedTreeSort;
 import org.aivan.sort.tree.LeveledTreeSort;
-import org.aivan.sort.tree.OrderedTreeSort;
 import org.junit.Test;
 
 public class LeveledTreeSortTest extends SortRandomArraysTest {

@@ -11,7 +11,7 @@ import org.junit.Test;
 
 public class LeveledTreeTest {
 
-	private static final int TEST_ITEMS_COUNT = 20000;
+	private static final int TEST_ITEMS_COUNT = 50000;
 
 	@Test
 	public void treeTestLongRandom() {
@@ -20,11 +20,11 @@ public class LeveledTreeTest {
 		int i = 0;
 		for (Long l : data) {
 			stree.add(l);
-			i++;
-			List<Long> items = stree.getAll();
-			if (i != items.size()) {
-				Assert.assertEquals(i, items.size());
-			}
+//			i++;
+//			List<Long> items = stree.getAll();
+//			if (i != items.size()) {
+//				Assert.assertEquals(i, items.size());
+//			}
 		}
 		// Now check the tree:
 		List<Long> items = stree.getAll();
@@ -49,11 +49,11 @@ public class LeveledTreeTest {
 		int i = 0;
 		for (String l : data) {
 			stree.add(l);
-			i++;
-			List<String> items = stree.getAll();
-			if (i != items.size()) {
-				Assert.assertEquals(i, items.size());
-			}
+//			i++;
+//			List<String> items = stree.getAll();
+//			if (i != items.size()) {
+//				Assert.assertEquals(i, items.size());
+//			}
 		}
 		// Now check the tree:
 		List<String> items = stree.getAll();
