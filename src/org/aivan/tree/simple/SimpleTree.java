@@ -61,16 +61,16 @@ public class SimpleTree<T extends Comparable<T>> implements Tree<T> {
 				result = addLeft(node, element, elementCount);
 				if (result) {
 					node.leftCount++;
-//					node.height = Math.max(node.height, node.left.height + 1);
+					// node.height = Math.max(node.height, node.left.height + 1);
 				}
 			} else {
 				result = addRight(node, element, elementCount);
 				if (result) {
 					node.rightCount++;
-//					node.height = Math.max(node.height, node.right.height + 1);
+					// node.height = Math.max(node.height, node.right.height + 1);
 				}
 			}
-			if(result) {
+			if (result) {
 				updateHeight(node);
 			}
 		}
@@ -172,7 +172,7 @@ public class SimpleTree<T extends Comparable<T>> implements Tree<T> {
 				}
 				// Update Node levels
 				decrementLevels(node.left);
-				//updateHeight(node.left);
+				// updateHeight(node.left);
 			} else {
 				// replace this node with right child:
 				if (node.parent != null) {
@@ -189,7 +189,7 @@ public class SimpleTree<T extends Comparable<T>> implements Tree<T> {
 				}
 				// Update Node levels
 				decrementLevels(node.right);
-				//updateHeight(node.right);
+				// updateHeight(node.right);
 			}
 			return true;
 		} else {
@@ -218,7 +218,7 @@ public class SimpleTree<T extends Comparable<T>> implements Tree<T> {
 
 	}
 
-	private void updateHeight(Node<T> node) {
+	protected void updateHeight(Node<T> node) {
 		if (node == null) {
 			return;
 		}
@@ -231,7 +231,7 @@ public class SimpleTree<T extends Comparable<T>> implements Tree<T> {
 		} else if (node.right != null) {
 			node.height = node.right.height + 1;
 		} else {
-			node.height = 0;
+			node.height = 1;
 		}
 
 	}
@@ -271,7 +271,7 @@ public class SimpleTree<T extends Comparable<T>> implements Tree<T> {
 	}
 
 	public void print() {
-		System.out.println("Tree element count: "+counter);
+		System.out.println("Tree element count: " + counter + ", height: " + (root != null ? root.height : 0));
 		print(root);
 	}
 

@@ -2,7 +2,6 @@ package org.aivan.tree;
 
 import java.util.Arrays;
 
-import org.aivan.tree.balanced.BalancedOrderedTree;
 import org.aivan.tree.balanced.LeveledTree;
 import org.aivan.tree.base.Node;
 import org.junit.Assert;
@@ -22,12 +21,12 @@ public class LeveledTreeUnitTest {
 
 	@Test
 	public void testAddToEmptyTree() {
-		BalancedOrderedTree<String> btree = new BalancedOrderedTree<String>();
+		LeveledTree<String> btree = new LeveledTree<String>();
 
 		btree.add("AAA");
 
 		Node<String> root = btree.getRoot();
-		validateNode(null, root, "AAA", 1, 0, 0, 0, null, 0, null);
+		validateNode(null, root, "AAA", 1, 0, 1, 0, null, 0, null);
 
 		Assert.assertEquals(1, btree.getAll().size());
 		Assert.assertTrue(Arrays.equals(new String[] { "AAA" }, btree.getAll().toArray(new String[] {})));
@@ -35,13 +34,13 @@ public class LeveledTreeUnitTest {
 
 	@Test
 	public void testAddToEmptyMoreValuesTree() {
-		BalancedOrderedTree<String> btree = new BalancedOrderedTree<String>();
+		LeveledTree<String> btree = new LeveledTree<String>();
 
 		btree.add("AAA");
 		btree.add("BBB");
 
 		Node<String> root = btree.getRoot();
-		validateNode(null, root, "AAA", 1, 0, 1, 0, null, 1, null);
+		validateNode(null, root, "AAA", 1, 0, 2, 0, null, 1, null);
 
 		Assert.assertEquals(2, btree.getAll().size());
 		Assert.assertTrue(Arrays.equals(new String[] { "AAA", "BBB" }, btree.getAll().toArray(new String[] {})));
@@ -49,7 +48,7 @@ public class LeveledTreeUnitTest {
 
 	@Test
 	public void testAddToEmptyLevels() {
-		BalancedOrderedTree<String> btree = new BalancedOrderedTree<String>();
+		LeveledTree<String> btree = new LeveledTree<String>();
 
 		btree.add("BBB");
 		btree.add("AAA");
@@ -59,15 +58,15 @@ public class LeveledTreeUnitTest {
 		btree.add("DDD");
 
 		Node<String> root = btree.getRoot();
-		validateNode(null, root, "BBB", 1, 0, 2, 1, null, 2, null);
+		validateNode(null, root, "BBB", 1, 0, 3, 1, null, 2, null);
 
 		// Check child node
 		Node<String> child = root.right;
-		validateNode(root, child, "CCC", 1, 1, 1, 0, null, 1, null);
+		validateNode(root, child, "CCC", 1, 1, 2, 0, null, 1, null);
 
 		// Check child node
 		Node<String> child2 = child.right;
-		validateNode(child, child2, "DDD", 3, 2, 0, 0, null, 0, null);
+		validateNode(child, child2, "DDD", 3, 2, 1, 0, null, 0, null);
 
 		Assert.assertEquals(6, btree.getAll().size());
 		Assert.assertTrue(Arrays.equals(new String[] { "AAA", "BBB", "CCC", "DDD", "DDD", "DDD" },
@@ -76,7 +75,7 @@ public class LeveledTreeUnitTest {
 
 	@Test
 	public void testLevelsAfterDelete() {
-		BalancedOrderedTree<String> btree = new BalancedOrderedTree<String>();
+		LeveledTree<String> btree = new LeveledTree<String>();
 
 		btree.add("BBB");
 		btree.add("AAA");
@@ -88,15 +87,15 @@ public class LeveledTreeUnitTest {
 		btree.delete("CCC");
 
 		Node<String> root = btree.getRoot();
-		validateNode(null, root, "BBB", 1, 0, 1, 1, null, 1, null);
+		validateNode(null, root, "BBB", 1, 0, 2, 1, null, 1, null);
 
 		// Check child node
 		Node<String> child = root.right;
-		validateNode(root, child, "DDD", 3, 1, 0, 0, null, 0, null);
+		validateNode(root, child, "DDD", 3, 1, 1, 0, null, 0, null);
 
 		// Check child node
 		Node<String> child2 = root.left;
-		validateNode(root, child2, "AAA", 1, 1, 0, 0, null, 0, null);
+		validateNode(root, child2, "AAA", 1, 1, 1, 0, null, 0, null);
 
 		Assert.assertEquals(5, btree.getAll().size());
 		Assert.assertTrue(
@@ -105,7 +104,7 @@ public class LeveledTreeUnitTest {
 
 	@Test
 	public void testBalanceRL() {
-		BalancedOrderedTree<String> btree = new BalancedOrderedTree<String>();
+		LeveledTree<String> btree = new LeveledTree<String>();
 
 		btree.add("AAA");
 		btree.add("BBB");
@@ -113,18 +112,89 @@ public class LeveledTreeUnitTest {
 		btree.add("CCC");
 
 		Node<String> root = btree.getRoot();
-		validateNode(null, root, "BBB", 1, 0, 1, 1, null, 1, null);
+		validateNode(null, root, "BBB", 1, 0, 2, 1, null, 1, null);
 
 		// Check child node
-		Node<String> child = root.right;
-		validateNode(root, child, "AAA", 1, 1, 0, 0, null, 0, null);
+		Node<String> child = root.left;
+		validateNode(root, child, "AAA", 1, 1, 1, 0, null, 0, null);
 
 		// Check child node
-		Node<String> child2 = root.left;
-		validateNode(root, child2, "CCC", 2, 1, 0, 0, null, 0, null);
+		Node<String> child2 = root.right;
+		validateNode(root, child2, "CCC", 2, 1, 1, 0, null, 0, null);
 
 		String[] expected = new String[] { "AAA", "BBB", "CCC", "CCC" };
-		
+
+		Assert.assertTrue(Arrays.equals(expected, btree.getAll().toArray(new String[] {})));
+	}
+
+	@Test
+	public void testBalanceLR() {
+		LeveledTree<String> btree = new LeveledTree<String>();
+
+		btree.add("CCC");
+		btree.add("CCC");
+		btree.add("BBB");
+		btree.add("AAA");
+
+		Node<String> root = btree.getRoot();
+		validateNode(null, root, "BBB", 1, 0, 2, 1, null, 1, null);
+
+		// Check child node
+		Node<String> child = root.left;
+		validateNode(root, child, "AAA", 1, 1, 1, 0, null, 0, null);
+
+		// Check child node
+		Node<String> child2 = root.right;
+		validateNode(root, child2, "CCC", 2, 1, 1, 0, null, 0, null);
+
+		String[] expected = new String[] { "AAA", "BBB", "CCC", "CCC" };
+
+		Assert.assertTrue(Arrays.equals(expected, btree.getAll().toArray(new String[] {})));
+	}
+
+	@Test
+	public void testBalanceRL2() {
+		LeveledTree<String> btree = new LeveledTree<String>();
+
+		btree.add("BBB");
+		btree.add("AAA");
+		btree.add("CCC");
+		btree.add("DDD");
+
+		btree.print();
+
+		btree.add("EEE");
+
+		// Here first move should happen:
+
+		btree.print();
+
+		Node<String> root = btree.getRoot();
+		validateNode(null, root, "BBB", 1, 0, 3, 1, null, 3, null);
+
+		btree.add("FFF");
+
+		root = btree.getRoot();
+		validateNode(null, root, "DDD", 1, 0, 3, 3, null, 2, null);
+
+		// Check child node
+		Node<String> child = root.left;
+		validateNode(root, child, "BBB", 1, 1, 2, 1, null, 1, null);
+
+		Node<String> childL = child.left;
+		validateNode(child, childL, "AAA", 1, 2, 1, 0, null, 0, null);
+		Node<String> childR = child.right;
+		validateNode(child, childR, "CCC", 1, 2, 1, 0, null, 0, null);
+
+		// Check child node
+		Node<String> child2 = root.right;
+		validateNode(root, child2, "EEE", 1, 1, 2, 0, null, 1, null);
+
+		Node<String> child2r = child2.right;
+		validateNode(child2, child2r, "FFF", 1, 2, 1, 0, null, 0, null);
+
+		String[] expected = new String[] { "AAA", "BBB", "CCC", "DDD", "EEE", "FFF" };
+
 		Assert.assertTrue(Arrays.equals(expected, btree.getAll().toArray(new String[] {})));
 	}
 

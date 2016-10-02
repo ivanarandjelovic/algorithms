@@ -28,10 +28,9 @@ public class Node<T> {
 	public int level = 0;
 
 	/**
-	 * Maximum height of the tree including this node (0 - no children, only this
-	 * node)
+	 * Maximum height of the tree including this node (0 - for nil nodes, 1 - leaf node only)
 	 */
-	public int height = 0;
+	public int height = 1;
 
 	@Override
 	public String toString() {
