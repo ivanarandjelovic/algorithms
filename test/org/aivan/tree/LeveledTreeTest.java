@@ -4,18 +4,18 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.aivan.generators.DataGenerator;
-import org.aivan.tree.balanced.BalancedOrderedTree;
+import org.aivan.tree.balanced.LeveledTree;
 import org.aivan.tree.simple.SimpleTree;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class BalancedTreeTest {
+public class LeveledTreeTest {
 
 	private static final int TEST_ITEMS_COUNT = 20000;
 
 	@Test
 	public void treeTestLongRandom() {
-		SimpleTree<Long> stree = new BalancedOrderedTree<Long>();
+		SimpleTree<Long> stree = new LeveledTree<Long>();
 		Long[] data = DataGenerator.generateRandomLongObjArray(TEST_ITEMS_COUNT);
 		int i = 0;
 		for (Long l : data) {
@@ -34,13 +34,17 @@ public class BalancedTreeTest {
 		// Assert.assertTrue("List contains item: "+i, items.contains(new Long(i)));
 		// }
 		// All elements are to the right
+		System.out.println("======");
 		System.out.println("Left count:" + stree.getRoot().leftCount);
 		System.out.println("Right count:" + stree.getRoot().rightCount);
+		System.out.println("Height:" + stree.getRoot().height);
+		System.out.println("Left height:" + stree.getRoot().left.height);
+		System.out.println("Right height:" + stree.getRoot().right.height);
 	}
 
 	@Test
 	public void treeTestStringRandom() throws Exception {
-		SimpleTree<String> stree = new BalancedOrderedTree<String>();
+		SimpleTree<String> stree = new LeveledTree<String>();
 		String[] data = DataGenerator.generateRandomOrderedStringArray(TEST_ITEMS_COUNT, 5);
 		int i = 0;
 		for (String l : data) {
@@ -59,8 +63,12 @@ public class BalancedTreeTest {
 		// Assert.assertTrue("List contains item: "+i, items.contains(new Long(i)));
 		// }
 		// All elements are to the right
+		System.out.println("======");
 		System.out.println("Left count:" + stree.getRoot().leftCount);
 		System.out.println("Right count:" + stree.getRoot().rightCount);
+		System.out.println("Height:" + stree.getRoot().height);
+		System.out.println("Left height:" + stree.getRoot().left.height);
+		System.out.println("Right height:" + stree.getRoot().right.height);
 		
 		String[] systemSorted = systemSort(data);
 		
